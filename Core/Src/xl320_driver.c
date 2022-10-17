@@ -53,11 +53,15 @@ unsigned short xl320_updateCrc(unsigned short crc_accum, unsigned char *data_blk
 	return crc_accum;
 }
 
-void clearReceiveBuffer(uint8_t* buffer){
+void clearReceiveBuffer(uint8_t* buffer) {
 	int i;
 	for(i = 0; i < 32; i++){
 		buffer[i] = 0;
 	}
+}
+
+void xl320_sendCommand(const uin8_t servoId, uint8_t* packet, uint16_t packetLength) {
+
 }
 
 void xl320_ping(const uint8_t servoId) {
