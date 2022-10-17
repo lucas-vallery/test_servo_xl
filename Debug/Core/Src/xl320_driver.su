@@ -1,0 +1,3 @@
+../Core/Src/xl320_driver.c:11:16:xl320_updateCrc	536	static
+../Core/Src/xl320_driver.c:56:6:clearReceiveBuffer	24	static
+../Core/Src/xl320_driver.c:63:6:xl320_ping	64	static
