@@ -71,7 +71,7 @@ void xl320_ping(const uint8_t servoId) {
 
 	HAL_HalfDuplex_EnableTransmitter(&huart6);
 	HAL_UART_Transmit(&huart6, pingPacket, 10*sizeof(char), 0x1F4);
-	//printf("sent\r\n");
+	printf("sent\r\n");
 
 	HAL_HalfDuplex_EnableReceiver(&huart6);
 	HAL_UART_Receive(&huart6, receiveBuffer, 32, 0x1F4);
