@@ -17,6 +17,7 @@ unsigned short xl320_updateCrc(unsigned short crc_accum, unsigned char *data_blk
 
 void clearReceiveBuffer(uint8_t* buffer);
 
+
 /**
  * @brief Send command to the XL320 with the corresponding ID
  *
@@ -26,8 +27,13 @@ void clearReceiveBuffer(uint8_t* buffer);
  *
  * @return void
  */
+
+void xls320_addHeader(void);
+
 void xl320_sendCommand(const uin8_t servoId, uint8_t* packet, uint16_t packetLength);
 
 void xl320_ping(const uint8_t servoId);
+
+
 
 //void xl320_led(const uint8_t servoID);
