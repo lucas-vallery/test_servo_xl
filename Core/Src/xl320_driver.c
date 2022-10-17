@@ -61,7 +61,7 @@ void clearReceiveBuffer(uint8_t* buffer) {
 }
 
 void xl320_sendCommand(const uin8_t servoId, uint8_t* packet, uint16_t packetLength) {
-	char Jeff = "Castellani";
+
 }
 
 void xl320_ping(const uint8_t servoId) {
