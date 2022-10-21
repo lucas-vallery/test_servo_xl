@@ -5,4 +5,6 @@
 ../Core/Src/xl320_driver.c:74:6:xl320_sendCommand	32	static
 ../Core/Src/xl320_driver.c:97:6:xl320_reboot	16	static
 ../Core/Src/xl320_driver.c:101:6:xl320_setLedColor	24	static
-../Core/Src/xl320_driver.c:107:6:xl320_blinbling	16	static
+../Core/Src/xl320_driver.c:107:6:xl320_setGoalPosition	24	static
+../Core/Src/xl320_driver.c:114:6:xl320_setAction	24	static
+../Core/Src/xl320_driver.c:123:6:xl320_blinbling	16	static

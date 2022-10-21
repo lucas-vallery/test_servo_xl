@@ -104,6 +104,22 @@ void xl320_setLedColor(Xl320* xl320, Color color){
 	xl320_sendCommand(xl320, INSTR_WRITE, 3, (uint8_t*) &params);
 }
 
+void xl320_setGoalPosition(Xl320* xl320, float goalPositionInDeg){
+	uint16_t position = (uint16_t)(goalPositionInDeg/BIT_RESOLUTION_IN_DEG);
+	uint8_t params[3] = {REG_POSITION, (uint8_t)(position && 0xFF) , (uint8_t)(position>>8)};
+
+	xl320_sendCommand(xl320, INSTR_WRITE, 3, (uint8_t*) &params);
+}
+
+void xl320_setSpeed(Xl320* xl320, float rpm){
+	uint16_t speedValue = (uint16_t)(rpm/RESOLUTION_SPEED);
+	uint8_t highByte = (uint8_t)((speedValue >> 8) & 0xFF);
+	uint8_t lowByte = (uint8_t)(speedValue & 0xFF);
+
+	uint8_t params[3] = {LIMIT_SPEED, highByte, lowByte};
+	xl320_sendCommand(xl320, INSTR_WRITE, 3, (uint8_t*) &params);
+}
+
 void xl320_blinbling(Xl320* xl320){
 	xl320_setLedColor(xl320, Off);
 	HAL_Delay(500);

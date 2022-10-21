@@ -106,7 +106,9 @@ int main(void)
 	while (1)
 	{
 		printf("Ping id : %d\r\n", 1);
-		xl320_blinbling(servo);
+		//xl320_blinbling(servo);
+		xl320_setSpeed(servo, 50);
+		xl320_setGoalPosition(servo, 90.0);
 		//xl320_reboot(servo);
 		//xl320_setLedColor(servo, Yellow);
 		HAL_Delay(1000);

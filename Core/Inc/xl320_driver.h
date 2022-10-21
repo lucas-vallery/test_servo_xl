@@ -12,6 +12,10 @@
 #include "main.h"
 #include "usart.h"
 
+#define BIT_RESOLUTION_IN_DEG 0.29
+#define RESOLUTION_SPEED 0.111
+#define LIMIT_SPEED 114
+
 /*
  * BAUD RATES
  */
@@ -30,12 +34,14 @@
  * INSTRUCTIONS
  */
 #define INSTR_WRITE 	0x03
+#define INSTR_ACTION	0x05
 #define INSTR_REBOOT 	0x08
 
 /*
  * REGISTERS
  */
 #define REG_LED			0x19
+#define REG_POSITION 	0x1E
 
 
 /*
@@ -72,6 +78,10 @@ void xl320_sendCommand(Xl320* xl320, uint8_t inst, uint16_t nbParams, uint8_t* p
 void xl320_reboot(Xl320* xl320);
 
 void xl320_setLedColor(Xl320* xl320, Color color);
+
+void xl320_setGoalPosition(Xl320* xl320, float goalPositionInDeg);
+
+void xl320_setSpeed(Xl320* xl320, float rpm);
 
 void xl320_blinbling(Xl320* xl320);
 
