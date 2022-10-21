@@ -40,6 +40,7 @@
 /*
  * REGISTERS
  */
+#define REG_TORQUE_EN	0x18
 #define REG_LED			0x19
 #define REG_POSITION 	0x1E
 
@@ -82,6 +83,10 @@ void xl320_setLedColor(Xl320* xl320, Color color);
 void xl320_setGoalPosition(Xl320* xl320, float goalPositionInDeg);
 
 void xl320_setSpeed(Xl320* xl320, float rpm);
+
+void xl320_executeAction(Xl320* xl320);
+
+void xl320_torqueEnable(Xl320* xl320);
 
 void xl320_blinbling(Xl320* xl320);
 
