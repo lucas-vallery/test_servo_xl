@@ -7,6 +7,18 @@
 
 #include "xl320_driver.h"
 
+void xl320_init(Xl320* xl320, UART_HandleTypeDef* uart, uint8_t id, uint8_t br){
+	xl320->uart = uart;
+	xl320->id 	= id;
+	xl320->br	= br;
+}
+
+void xl320_addHeader2Buff(uint8_t* buff){
+	buff[0] = 0xFF;
+	buff[1] = 0xFF;
+	buff[2] = 0xFD;
+	buff[3] = 0x00;
+}
 
 unsigned short xl320_updateCrc(unsigned short crc_accum, unsigned char *data_blk_ptr, unsigned short data_blk_size) {
 	unsigned short i, j;
@@ -53,7 +65,65 @@ unsigned short xl320_updateCrc(unsigned short crc_accum, unsigned char *data_blk
 	return crc_accum;
 }
 
-void clearReceiveBuffer(uint8_t* buffer) {
+void xl320_copyParams2Buff(uint8_t buffStartIndex, uint8_t* buff, uint16_t nbParams, uint8_t* params){
+	for(int i = 0; i < nbParams; i++){
+		buff[i + buffStartIndex] = params[i];
+	}
+}
+
+void xl320_sendCommand(Xl320* xl320, uint8_t inst, uint16_t nbParams, uint8_t* params){
+	uint8_t* txBuff = NULL;
+	txBuff = (uint8_t*) malloc((MIN_FRAME_SIZE + nbParams)*sizeof(uint8_t));
+	uint16_t length = nbParams + 3;
+
+	xl320_addHeader2Buff(txBuff);
+	txBuff[4] = xl320->id;
+	txBuff[5] = (uint8_t) (length & 0xFF);
+	txBuff[6] = (uint8_t) (length >> 8);
+	txBuff[7] = inst;
+	xl320_copyParams2Buff(8, txBuff, nbParams, params);
+
+	uint16_t crc = xl320_updateCrc(0, txBuff, MIN_FRAME_SIZE + nbParams - CRC_FIELD_SIZE);
+
+	txBuff[(MIN_FRAME_SIZE + nbParams) - 2] = (uint8_t) (crc & 0xFF);
+	txBuff[(MIN_FRAME_SIZE + nbParams) - 1] = (uint8_t) (crc >> 8);
+
+	HAL_HalfDuplex_EnableTransmitter(&huart6);
+	HAL_UART_Transmit(xl320->uart, txBuff, (MIN_FRAME_SIZE + nbParams)*sizeof(uint8_t), HAL_MAX_DELAY);
+
+	free(txBuff);
+}
+
+void xl320_reboot(Xl320* xl320){
+	xl320_sendCommand(xl320, INSTR_REBOOT, 0, NULL);
+}
+
+void xl320_setLedColor(Xl320* xl320, Color color){
+	uint8_t params[3] = {REG_LED, 0, (uint8_t) color};
+
+	xl320_sendCommand(xl320, INSTR_WRITE, 3, (uint8_t*) &params);
+}
+
+void xl320_blinbling(Xl320* xl320){
+	xl320_setLedColor(xl320, Off);
+	HAL_Delay(500);
+	xl320_setLedColor(xl320, Red);
+	HAL_Delay(500);
+	xl320_setLedColor(xl320, Green);
+	HAL_Delay(500);
+	xl320_setLedColor(xl320, Yellow);
+	HAL_Delay(500);
+	xl320_setLedColor(xl320, Blue);
+	HAL_Delay(500);
+	xl320_setLedColor(xl320, Purple);
+	HAL_Delay(500);
+	xl320_setLedColor(xl320, Cyan);
+	HAL_Delay(500);
+	xl320_setLedColor(xl320, White);
+	HAL_Delay(500);
+}
+/*
+void xl320_clearReceiveBuffer(uint8_t* buffer) {
 	int i;
 	for(i = 0; i < 32; i++){
 		buffer[i] = 0;
@@ -62,8 +132,9 @@ void clearReceiveBuffer(uint8_t* buffer) {
 
 
 void xl320_sendCommand(const uin8_t servoId, uint8_t* packet, uint16_t packetLength) {
+}
 
-void xls320_addHeader(){
+void xl320_addHeader(){
 	uint8_t headerPacket[] = {0xFF, 0xFF, 0xFD};
 }
 
@@ -75,7 +146,7 @@ void xl320_ping(const uint8_t servoId) {
 	uint8_t pingPacket[] = {0xFF, 0xFF, 0xFD, 0x00, servoId, 0x03, 0x00, 0x01, 0x0, 0x0};
 	unsigned short crc = xl320_updateCrc(0, pingPacket, 8);
 	uint8_t receiveBuffer[32];
-	clearReceiveBuffer(receiveBuffer);
+	xl320_clearReceiveBuffer(receiveBuffer);
 
 	pingPacket[8] = (uint8_t) (crc & 0xFF);
 	pingPacket[9] = (uint8_t) (crc >> 8);
@@ -93,4 +164,4 @@ void xl320_ping(const uint8_t servoId) {
 		}
 	}
 }
-
+ */

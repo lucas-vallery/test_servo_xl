@@ -44,7 +44,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-
+Xl320* servo;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -98,7 +98,7 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART6_UART_Init();
   /* USER CODE BEGIN 2 */
-  uint8_t id = 0;
+  xl320_init(servo, &huart6, 1, BR_1M);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -106,9 +106,10 @@ int main(void)
 	while (1)
 	{
 		printf("Ping id : %d\r\n", 1);
-		xl320_ping(1);
-		id++;
-		HAL_Delay(1000000);
+		xl320_blinbling(servo);
+		//xl320_reboot(servo);
+		//xl320_setLedColor(servo, Yellow);
+		HAL_Delay(1000);
 
     /* USER CODE END WHILE */
 

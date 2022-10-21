@@ -1,3 +1,8 @@
-../Core/Src/xl320_driver.c:11:16:xl320_updateCrc	536	static
-../Core/Src/xl320_driver.c:56:6:clearReceiveBuffer	24	static
-../Core/Src/xl320_driver.c:63:6:xl320_ping	64	static
+../Core/Src/xl320_driver.c:10:6:xl320_init	24	static
+../Core/Src/xl320_driver.c:16:6:xl320_addHeader2Buff	16	static
+../Core/Src/xl320_driver.c:23:16:xl320_updateCrc	536	static
+../Core/Src/xl320_driver.c:68:6:xl320_copyParams2Buff	32	static
+../Core/Src/xl320_driver.c:74:6:xl320_sendCommand	32	static
+../Core/Src/xl320_driver.c:97:6:xl320_reboot	16	static
+../Core/Src/xl320_driver.c:101:6:xl320_setLedColor	24	static
+../Core/Src/xl320_driver.c:107:6:xl320_blinbling	16	static
