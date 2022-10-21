@@ -89,7 +89,7 @@ void xl320_sendCommand(Xl320* xl320, uint8_t inst, uint16_t nbParams, uint8_t* p
 	txBuff[(MIN_FRAME_SIZE + nbParams) - 1] = (uint8_t) (crc >> 8);
 
 	HAL_HalfDuplex_EnableTransmitter(&huart6);
-	HAL_UART_Transmit(xl320->uart, txBuff, (MIN_FRAME_SIZE + nbParams)*sizeof(uint8_t), HAL_MAX_DELAY);
+	HAL_UART_Transmit(xl320->uart, txBuff, (MIN_FRAME_SIZE + nbParams)*sizeof(uint8_t), 0x1F4);
 
 	free(txBuff);
 }
@@ -106,9 +106,9 @@ void xl320_setLedColor(Xl320* xl320, Color color){
 
 void xl320_setGoalPosition(Xl320* xl320, float goalPositionInDeg){
 	uint16_t position = (uint16_t)(goalPositionInDeg/BIT_RESOLUTION_IN_DEG);
-	uint8_t params[3] = {REG_POSITION, (uint8_t)(position & 0xFF) , (uint8_t)(position >> 8)};
+	uint8_t params[4] = {REG_POSITION, 0, (uint8_t)(position & 0xFF) , (uint8_t)(position >> 8)};
 
-	xl320_sendCommand(xl320, INSTR_WRITE, 3, (uint8_t*) &params);
+	xl320_sendCommand(xl320, INSTR_WRITE, 4, (uint8_t*) &params);
 }
 
 void xl320_setSpeed(Xl320* xl320, float rpm){
@@ -116,7 +116,7 @@ void xl320_setSpeed(Xl320* xl320, float rpm){
 	uint8_t highByte = (uint8_t)((speedValue >> 8) & 0xFF);
 	uint8_t lowByte = (uint8_t)(speedValue & 0xFF);
 
-	uint8_t params[3] = {LIMIT_SPEED, lowByte, highByte};
+	uint8_t params[4] = {LIMIT_SPEED, 0, lowByte, highByte};
 	xl320_sendCommand(xl320, INSTR_WRITE, 3, (uint8_t*) &params);
 }
 
@@ -125,9 +125,9 @@ void xl320_executeAction(Xl320* xl320){
 }
 
 void xl320_torqueEnable(Xl320* xl320){
-	uint8_t params[2] = {REG_TORQUE_EN, ENABLE};
+	uint8_t params[3] = {REG_TORQUE_EN, 0, ENABLE};
 
-	xl320_sendCommand(xl320, INSTR_WRITE, 2, (uint8_t*) &params);
+	xl320_sendCommand(xl320, INSTR_WRITE, 3, (uint8_t*) &params);
 }
 
 void xl320_blinbling(Xl320* xl320){

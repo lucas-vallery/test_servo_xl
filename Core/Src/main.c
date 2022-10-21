@@ -99,23 +99,24 @@ int main(void)
 	MX_USART6_UART_Init();
 	/* USER CODE BEGIN 2 */
 	xl320_init(servo, &huart6, 1, BR_1M);
-	HAL_Delay(250);
-	xl320_setSpeed(servo, 50);
-	xl320_setGoalPosition(servo, 180.0);
 	xl320_torqueEnable(servo);
-	xl320_executeAction(servo);
+	xl320_setSpeed(servo, 100);
+	HAL_Delay(250);
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1)
 	{
-		printf("Ping id : %d\r\n", 1);
-		xl320_blinbling(servo);
+		//printf("Ping id : %d\r\n", 1);
 
-		//xl320_reboot(servo);
-		//xl320_setLedColor(servo, Yellow);
-		//HAL_Delay(1000);
+		xl320_setGoalPosition(servo, 0);
+		xl320_executeAction(servo);
+		HAL_Delay(1000);
+		xl320_setGoalPosition(servo, 180);
+		xl320_executeAction(servo);
+		HAL_Delay(1000);
 
 		/* USER CODE END WHILE */
 

@@ -34,6 +34,7 @@
  * INSTRUCTIONS
  */
 #define INSTR_WRITE 	0x03
+#define INSTR_REG_WRITE 0x04
 #define INSTR_ACTION	0x05
 #define INSTR_REBOOT 	0x08
 
