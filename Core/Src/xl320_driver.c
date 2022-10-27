@@ -7,10 +7,11 @@
 
 #include "xl320_driver.h"
 
-void xl320_init(Xl320* xl320, UART_HandleTypeDef* uart, uint8_t id, XL320_BaudRate_t br){
-	xl320->uart = uart;
+int xl320_init(XL320_t* xl320, uint8_t id, XL320_BaudRate_t br){
 	xl320->id 	= id;
 	xl320->br	= br;
+
+	return 0;
 }
 
 void xl320_addHeader2Buff(uint8_t* buff){
@@ -71,7 +72,7 @@ void xl320_copyParams2Buff(uint8_t buffStartIndex, uint8_t* buff, uint16_t nbPar
 	}
 }
 
-void xl320_sendCommand(Xl320* xl320, Instruction_t inst, uint16_t nbParams, uint8_t* params){
+int xl320_sendCommand(XL320_t* xl320, Instruction_t inst, uint16_t nbParams, uint8_t* params){
 	uint8_t* txBuff = NULL;
 	txBuff = (uint8_t*) malloc((MIN_FRAME_SIZE + nbParams)*sizeof(uint8_t));
 	uint16_t length = nbParams + 3;
@@ -88,49 +89,65 @@ void xl320_sendCommand(Xl320* xl320, Instruction_t inst, uint16_t nbParams, uint
 	txBuff[(MIN_FRAME_SIZE + nbParams) - 2] = (uint8_t) (crc & 0xFF);
 	txBuff[(MIN_FRAME_SIZE + nbParams) - 1] = (uint8_t) (crc >> 8);
 
+	xl320->serial.transmit(txBuff, (MIN_FRAME_SIZE + nbParams)*sizeof(uint8_t), 0x1F4);
+	/*
 	HAL_HalfDuplex_EnableTransmitter(&huart6);
 	HAL_UART_Transmit(xl320->uart, txBuff, (MIN_FRAME_SIZE + nbParams)*sizeof(uint8_t), 0x1F4);
+	*/
 
 	free(txBuff);
+	return 0;
 }
 
-void xl320_reboot(Xl320* xl320){
+int xl320_reboot(XL320_t* xl320){
 	xl320_sendCommand(xl320, REBOOT, 0, NULL);
+
+	return 0;
 }
 
-void xl320_setLedColor(Xl320* xl320, Color color){
+int xl320_setLedColor(XL320_t* xl320, Color_t color){
 	uint8_t params[3] = {LED, 0, (uint8_t) color};
 
 	xl320_sendCommand(xl320, WRITE, 3, (uint8_t*) &params);
+
+	return 0;
 }
 
-void xl320_setGoalPosition(Xl320* xl320, float goalPositionInDeg){
+int xl320_setGoalPosition(XL320_t* xl320, float goalPositionInDeg){
 	uint16_t position = (uint16_t)(goalPositionInDeg/BIT_RESOLUTION_IN_DEG);
 	uint8_t params[4] = {POSITION, 0, (uint8_t)(position & 0xFF) , (uint8_t)(position >> 8)};
 
 	xl320_sendCommand(xl320, WRITE, 4, (uint8_t*) &params);
+
+	return 0;
 }
 
-void xl320_setSpeed(Xl320* xl320, float rpm){
+int xl320_setSpeed(XL320_t* xl320, float rpm){
 	uint16_t speedValue = (uint16_t)(rpm/RESOLUTION_SPEED);
 	uint8_t highByte = (uint8_t)((speedValue >> 8) & 0xFF);
 	uint8_t lowByte = (uint8_t)(speedValue & 0xFF);
 
 	uint8_t params[4] = {LIMIT_SPEED, 0, lowByte, highByte};
 	xl320_sendCommand(xl320, WRITE, 3, (uint8_t*) &params);
+
+	return 0;
 }
 
-void xl320_executeAction(Xl320* xl320){
+int xl320_executeAction(XL320_t* xl320){
 	xl320_sendCommand(xl320, ACTION, 0, NULL);
+
+	return 0;
 }
 
-void xl320_torqueEnable(Xl320* xl320){
+int xl320_torqueEnable(XL320_t* xl320){
 	uint8_t params[3] = {TORQUE_EN, 0, ENABLE};
 
 	xl320_sendCommand(xl320, WRITE, 3, (uint8_t*) &params);
+
+	return 0;
 }
 
-void xl320_blinbling(Xl320* xl320){
+int xl320_blinbling(XL320_t* xl320){
 	xl320_setLedColor(xl320, Off);
 	HAL_Delay(100);
 	xl320_setLedColor(xl320, Red);
@@ -147,6 +164,8 @@ void xl320_blinbling(Xl320* xl320){
 	HAL_Delay(100);
 	xl320_setLedColor(xl320, White);
 	HAL_Delay(100);
+
+	return 0;
 }
 
 

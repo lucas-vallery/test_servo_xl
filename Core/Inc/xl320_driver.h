@@ -11,49 +11,61 @@
 
 #include "main.h"
 #include "usart.h"
-
-#define BIT_RESOLUTION_IN_DEG 0.29
-#define RESOLUTION_SPEED 0.111
-#define LIMIT_SPEED 114
+#include "uart_half_duplex_driver.h"
 
 /*
- * BAUD RATES
+ * SERVO CONSTANTS
  */
-typedef enum baudRate{
-	BR_9600 = 0,
-	BR_57600 = 1,
-	BR_115200 = 2,
-	BR_1M = 3
-}XL320_BaudRate_t;
+#define BIT_RESOLUTION_IN_DEG 	0.29
+#define RESOLUTION_SPEED 		0.111
+#define LIMIT_SPEED 			114
+
+#define GATE_CLOSED 			69
+
+
 /*
  * FRAME SIZE
  */
 #define MIN_FRAME_SIZE 	10
 #define CRC_FIELD_SIZE	2
 
+
+/*
+ * BAUD RATES
+ */
+typedef enum baudRate_struct{
+	BR_9600 	=	0,
+	BR_57600 	=	1,
+	BR_115200 	= 	2,
+	BR_1M 		=	3
+}XL320_BaudRate_t;
+
+
 /*
  * INSTRUCTIONS
  */
-typedef enum Instruction{
-	WRITE = 0x03,
-	REG_WRITE = 0x04,
-	ACTION = 0x05,
-	REBOOT = 0x08
+typedef enum instruction_struct{
+	WRITE 		= 	0x03,
+	REG_WRITE 	= 	0x04,
+	ACTION 		= 	0x05,
+	REBOOT 		= 	0x08
 }Instruction_t;
+
 
 /*
  * REGISTERS
  */
-typedef enum Register{
-	TORQUE_EN = 0x18,
-	LED = 0x19,
-	POSITION = 0x1E
+typedef enum register_struct{
+	TORQUE_EN 	= 	0x18,
+	LED 		= 	0x19,
+	POSITION 	= 	0x1E
 }Register_t;
+
 
 /*
  * LED COLORS
  */
-typedef enum Color{
+typedef enum color_struct{
 	Off,
 	Red,
 	Green,
@@ -62,20 +74,26 @@ typedef enum Color{
 	Purple,
 	Cyan,
 	White
-}Color;
+}Color_t;
 
+typedef int (* adxl345_transmit_t)(uint8_t *pData, uint16_t size, uint32_t timeout);
+typedef int (* adxl345_receive_t)(uint8_t *pData, uint16_t size, uint32_t timeout);
 
+typedef struct xl320_serial_struct{
+	adxl345_transmit_t transmit;
+	adxl345_receive_t receive;
+}xl320_serial_t;
 
-
-typedef struct Xl320{
-	UART_HandleTypeDef* uart;
+typedef struct XL320_struct{
 	uint8_t id;
 	uint8_t br;
-} Xl320;
+
+	xl320_serial_t serial;
+
+}XL320_t;
 
 
-
-void xl320_init(Xl320* xl320, UART_HandleTypeDef* uart, uint8_t id, uint8_t br);
+int xl320_init(XL320_t* xl320,uint8_t id, uint8_t br);
 
 void xl320_addHeader2Buff(uint8_t* buff);
 
@@ -83,21 +101,21 @@ unsigned short xl320_updateCrc(unsigned short crc_accum, unsigned char *data_blk
 
 void xl320_copyParams2Buff(uint8_t buffStartIndex, uint8_t* buff, uint16_t nbParams, uint8_t* params);
 
-void xl320_sendCommand(Xl320* xl320, uint8_t inst, uint16_t nbParams, uint8_t* params);
+int xl320_sendCommand(XL320_t* xl320, uint8_t inst, uint16_t nbParams, uint8_t* params);
 
-void xl320_reboot(Xl320* xl320);
+int xl320_reboot(XL320_t* xl320);
 
-void xl320_setLedColor(Xl320* xl320, Color color);
+int xl320_setLedColor(XL320_t* xl320, Color_t color);
 
-void xl320_setGoalPosition(Xl320* xl320, float goalPositionInDeg);
+int xl320_setGoalPosition(XL320_t* xl320, float goalPositionInDeg);
 
-void xl320_setSpeed(Xl320* xl320, float rpm);
+int xl320_setSpeed(XL320_t* xl320, float rpm);
 
-void xl320_executeAction(Xl320* xl320);
+int xl320_executeAction(XL320_t* xl320);
 
-void xl320_torqueEnable(Xl320* xl320);
+int xl320_torqueEnable(XL320_t* xl320);
 
-void xl320_blinbling(Xl320* xl320);
+int xl320_blinbling(XL320_t* xl320);
 
 /*
 void xl320_clearReceiveBuffer(uint8_t* buffer);

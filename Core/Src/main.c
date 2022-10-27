@@ -44,7 +44,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-Xl320* servo;
+XL320_t xl320;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -98,10 +98,14 @@ int main(void)
 	MX_USART1_UART_Init();
 	MX_USART6_UART_Init();
 	/* USER CODE BEGIN 2 */
-	xl320_init(servo, &huart6, 1, BR_1M);
-	xl320_torqueEnable(servo);
-	xl320_setSpeed(servo, 100);
+	xl320.serial.transmit = uart_half_duplex_transmit;
+	xl320.serial.receive  = uart_half_duplex_receive;
+
+	xl320_init(&xl320, 1, BR_1M);
+	xl320_torqueEnable(&xl320);
+	xl320_setSpeed(&xl320, 10);
 	HAL_Delay(250);
+
 
 	/* USER CODE END 2 */
 
@@ -109,14 +113,13 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 	while (1)
 	{
-		//printf("Ping id : %d\r\n", 1);
+		xl320_setGoalPosition(&xl320, 69);
+		xl320_executeAction(&xl320);
+		HAL_Delay(4000);
+		xl320_setGoalPosition(&xl320, 0);
+		xl320_executeAction(&xl320);
+		HAL_Delay(4000);
 
-		xl320_setGoalPosition(servo, 0);
-		xl320_executeAction(servo);
-		HAL_Delay(1000);
-		xl320_setGoalPosition(servo, 180);
-		xl320_executeAction(servo);
-		HAL_Delay(1000);
 
 		/* USER CODE END WHILE */
 

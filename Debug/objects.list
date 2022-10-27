@@ -5,6 +5,7 @@
 "./Core/Src/syscalls.o"
 "./Core/Src/sysmem.o"
 "./Core/Src/system_stm32f7xx.o"
+"./Core/Src/uart_half_duplex_driver.o"
 "./Core/Src/usart.o"
 "./Core/Src/xl320_driver.o"
 "./Core/Startup/startup_stm32f746nghx.o"

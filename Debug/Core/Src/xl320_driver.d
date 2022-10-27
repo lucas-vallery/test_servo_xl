@@ -28,7 +28,7 @@ Core/Src/xl320_driver.o: ../Core/Src/xl320_driver.c \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_pwr_ex.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h \
  ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h \
- ../Core/Inc/usart.h
+ ../Core/Inc/usart.h ../Core/Inc/uart_half_duplex_driver.h
 ../Core/Inc/xl320_driver.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal.h:
@@ -60,3 +60,4 @@ Core/Src/xl320_driver.o: ../Core/Src/xl320_driver.c \
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart.h:
 ../Drivers/STM32F7xx_HAL_Driver/Inc/stm32f7xx_hal_uart_ex.h:
 ../Core/Inc/usart.h:
+../Core/Inc/uart_half_duplex_driver.h:
