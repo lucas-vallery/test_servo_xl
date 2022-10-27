@@ -14,6 +14,19 @@
 #include "uart_half_duplex_driver.h"
 
 /*
+ * OPTION FOR DEBUG
+ */
+
+#define DEBUG_XL320_ENABLE
+
+#ifdef DEBUG_XL320_ENABLE
+	#define DEBUG_PRINTF(x) printf(x)
+#else
+	#define DEBUG_PRINTF
+#endif
+
+
+/*
  * SERVO CONSTANTS
  */
 #define BIT_RESOLUTION_IN_DEG 	0.29
@@ -22,12 +35,16 @@
 
 #define GATE_CLOSED 			69
 
+#define BUFFER_SIZE				32
+
 
 /*
  * FRAME SIZE
  */
-#define MIN_FRAME_SIZE 	10
-#define CRC_FIELD_SIZE	2
+#define MIN_FRAME_SIZE 		10
+#define CRC_FIELD_SIZE		2
+#define ERR_FRAME_OFFSET	7
+#define LEN_FRAME_OFFSET	5
 
 
 /*
@@ -49,8 +66,22 @@ typedef enum instruction_struct{
 	REG_WRITE 	= 	0x04,
 	ACTION 		= 	0x05,
 	REBOOT 		= 	0x08
-}Instruction_t;
+}XL320_Instruction_t;
 
+
+/*
+ * ERRORS
+ */
+typedef enum error_struct{
+	NO_ERROR			=	0x00,
+	RESULT_FAIL			=	0x01,
+	INSTR_ERROR			=	0x02,
+	CRC_ERROR			=	0x03,
+	DATA_RANGE_ERROR	=	0x04,
+	DATA_LENGTH_ERROR	=	0x05,
+	DATA_LIMIT_ERROR	=	0x06,
+	ACCESS_ERROR		=	0x07
+}XL320_Error_t;
 
 /*
  * REGISTERS
@@ -59,7 +90,7 @@ typedef enum register_struct{
 	TORQUE_EN 	= 	0x18,
 	LED 		= 	0x19,
 	POSITION 	= 	0x1E
-}Register_t;
+}XL320_Register_t;
 
 
 /*
@@ -74,7 +105,7 @@ typedef enum color_struct{
 	Purple,
 	Cyan,
 	White
-}Color_t;
+}XL320_Color_t;
 
 typedef int (* adxl345_transmit_t)(uint8_t *pData, uint16_t size, uint32_t timeout);
 typedef int (* adxl345_receive_t)(uint8_t *pData, uint16_t size, uint32_t timeout);
@@ -82,13 +113,18 @@ typedef int (* adxl345_receive_t)(uint8_t *pData, uint16_t size, uint32_t timeou
 typedef struct xl320_serial_struct{
 	adxl345_transmit_t transmit;
 	adxl345_receive_t receive;
-}xl320_serial_t;
+}XL320_Serial_t;
 
-typedef struct XL320_struct{
-	uint8_t id;
-	uint8_t br;
+/**
+ * \struct XL320_t
+ *
+ * \brief XL320 object
+ */
+typedef struct XL320_t{
+	uint8_t id; /*!< ID of the XL320. The default ID is 1*/
+	uint8_t br; /*!< Baude rate of the XL320. The default baude rate is at 1MBaud/s*/
 
-	xl320_serial_t serial;
+	XL320_Serial_t serial;
 
 }XL320_t;
 
@@ -103,9 +139,15 @@ void xl320_copyParams2Buff(uint8_t buffStartIndex, uint8_t* buff, uint16_t nbPar
 
 int xl320_sendCommand(XL320_t* xl320, uint8_t inst, uint16_t nbParams, uint8_t* params);
 
+int xl320_receiveCommand(XL320_t* xl320, uint8_t* rxBuff);
+
+int xl320_checkErrorField(uint8_t errCode);
+
+int xl320_check_crcField(uint8_t* buffer);
+
 int xl320_reboot(XL320_t* xl320);
 
-int xl320_setLedColor(XL320_t* xl320, Color_t color);
+int xl320_setLedColor(XL320_t* xl320, XL320_Color_t color);
 
 int xl320_setGoalPosition(XL320_t* xl320, float goalPositionInDeg);
 

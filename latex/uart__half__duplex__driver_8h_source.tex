@@ -1,0 +1,22 @@
+\hypertarget{uart__half__duplex__driver_8h_source}{}\doxysection{uart\+\_\+half\+\_\+duplex\+\_\+driver.\+h}
+\label{uart__half__duplex__driver_8h_source}\index{Core/Inc/uart\_half\_duplex\_driver.h@{Core/Inc/uart\_half\_duplex\_driver.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{ * uart\_half\_duplex\_driver.h}}
+\DoxyCodeLine{3 \textcolor{comment}{ *}}
+\DoxyCodeLine{4 \textcolor{comment}{ *  Created on: Oct 27, 2022}}
+\DoxyCodeLine{5 \textcolor{comment}{ *      Author: lucas}}
+\DoxyCodeLine{6 \textcolor{comment}{ */}}
+\DoxyCodeLine{7 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{usart_8h}{usart.h}}"{}}}
+\DoxyCodeLine{11 }
+\DoxyCodeLine{12 \textcolor{preprocessor}{\#define USART\_PORT huart6}}
+\DoxyCodeLine{13 }
+\DoxyCodeLine{14 \textcolor{keywordtype}{int} uart\_half\_duplex\_transmit(uint8\_t *pData, uint16\_t size, uint32\_t timeout);}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 \textcolor{keywordtype}{int} uart\_half\_duplex\_receive(uint8\_t *pData, uint16\_t size, uint32\_t timeout);}
+
+\end{DoxyCode}

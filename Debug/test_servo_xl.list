@@ -7,43 +7,43 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         00003bbc  080001c8  080001c8  000101c8  2**3
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       0000021c  08003d84  08003d84  00013d84  2**2
+  2 .rodata       000005ec  08003d84  08003d84  00013d84  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  08003fa0  08003fa0  00020070  2**0
+  3 .ARM.extab    00000000  08004370  08004370  00020070  2**0
                   CONTENTS
-  4 .ARM          00000008  08003fa0  08003fa0  00013fa0  2**2
+  4 .ARM          00000008  08004370  08004370  00014370  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  5 .preinit_array 00000000  08003fa8  08003fa8  00020070  2**0
+  5 .preinit_array 00000000  08004378  08004378  00020070  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  08003fa8  08003fa8  00013fa8  2**2
+  6 .init_array   00000004  08004378  08004378  00014378  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  7 .fini_array   00000004  08003fac  08003fac  00013fac  2**2
+  7 .fini_array   00000004  0800437c  0800437c  0001437c  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  8 .data         00000070  20000000  08003fb0  00020000  2**2
+  8 .data         00000070  20000000  08004380  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          00000148  20000070  08004020  00020070  2**2
+  9 .bss          00000148  20000070  080043f0  00020070  2**2
                   ALLOC
- 10 ._user_heap_stack 00000600  200001b8  08004020  000201b8  2**0
+ 10 ._user_heap_stack 00000600  200001b8  080043f0  000201b8  2**0
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  00020070  2**0
                   CONTENTS, READONLY
- 12 .debug_info   0000a8be  00000000  00000000  000200a0  2**0
+ 12 .debug_info   0000a9da  00000000  00000000  000200a0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 000019ad  00000000  00000000  0002a95e  2**0
+ 13 .debug_abbrev 000019ad  00000000  00000000  0002aa7a  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 00000798  00000000  00000000  0002c310  2**3
+ 14 .debug_aranges 000007b0  00000000  00000000  0002c428  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_ranges 000006d0  00000000  00000000  0002caa8  2**3
+ 15 .debug_ranges 000006e8  00000000  00000000  0002cbd8  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  00025b61  00000000  00000000  0002d178  2**0
+ 16 .debug_macro  00025b7f  00000000  00000000  0002d2c0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0000b6b3  00000000  00000000  00052cd9  2**0
+ 17 .debug_line   0000b77b  00000000  00000000  00052e3f  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000e6133  00000000  00000000  0005e38c  2**0
+ 18 .debug_str    000e6291  00000000  00000000  0005e5ba  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000050  00000000  00000000  001444bf  2**0
+ 19 .comment      00000050  00000000  00000000  0014484b  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  0000202c  00000000  00000000  00144510  2**2
+ 20 .debug_frame  000021e4  00000000  00000000  0014489c  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -1125,11 +1125,11 @@ int main(void)
 	HAL_Delay(250);
  8000d9e:	20fa      	movs	r0, #250	; 0xfa
  8000da0:	f000 fcbc 	bl	800171c <HAL_Delay>
+
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
 	while (1)
 	{
-		//printf("Ping id : %d\r\n", 1);
 		xl320_setGoalPosition(&xl320, 69);
  8000da4:	ed9f 0a0f 	vldr	s0, [pc, #60]	; 8000de4 <main+0x84>
  8000da8:	480b      	ldr	r0, [pc, #44]	; (8000dd8 <main+0x78>)
@@ -2269,7 +2269,7 @@ void xl320_copyParams2Buff(uint8_t buffStartIndex, uint8_t* buff, uint16_t nbPar
 
 08001426 <xl320_sendCommand>:
 
-int xl320_sendCommand(XL320_t* xl320, Instruction_t inst, uint16_t nbParams, uint8_t* params){
+int xl320_sendCommand(XL320_t* xl320, XL320_Instruction_t inst, uint16_t nbParams, uint8_t* params){
  8001426:	b580      	push	{r7, lr}
  8001428:	b086      	sub	sp, #24
  800142a:	af00      	add	r7, sp, #0
@@ -2371,7 +2371,7 @@ int xl320_sendCommand(XL320_t* xl320, Instruction_t inst, uint16_t nbParams, uin
 	/*
 	HAL_HalfDuplex_EnableTransmitter(&huart6);
 	HAL_UART_Transmit(xl320->uart, txBuff, (MIN_FRAME_SIZE + nbParams)*sizeof(uint8_t), 0x1F4);
-	*/
+	 */
 
 	free(txBuff);
  80014d2:	6978      	ldr	r0, [r7, #20]
@@ -2555,7 +2555,7 @@ int xl320_torqueEnable(XL320_t* xl320){
  8001606:	46bd      	mov	sp, r7
  8001608:	bd80      	pop	{r7, pc}
  800160a:	bf00      	nop
- 800160c:	08003f84 	.word	0x08003f84
+ 800160c:	080042f4 	.word	0x080042f4
 
 08001610 <Reset_Handler>:
  8001610:	f8df d034 	ldr.w	sp, [pc, #52]	; 8001648 <LoopFillZerobss+0x12>
@@ -2593,7 +2593,7 @@ int xl320_torqueEnable(XL320_t* xl320){
  8001648:	20050000 	.word	0x20050000
  800164c:	20000000 	.word	0x20000000
  8001650:	20000070 	.word	0x20000070
- 8001654:	08003fb0 	.word	0x08003fb0
+ 8001654:	08004380 	.word	0x08004380
  8001658:	20000070 	.word	0x20000070
  800165c:	200001b8 	.word	0x200001b8
 
@@ -4094,7 +4094,7 @@ int xl320_torqueEnable(XL320_t* xl320){
  8002392:	bf00      	nop
  8002394:	40023c00 	.word	0x40023c00
  8002398:	40023800 	.word	0x40023800
- 800239c:	08003f88 	.word	0x08003f88
+ 800239c:	080042f8 	.word	0x080042f8
  80023a0:	20000000 	.word	0x20000000
  80023a4:	20000004 	.word	0x20000004
 
@@ -4282,7 +4282,7 @@ int xl320_torqueEnable(XL320_t* xl320){
  8002568:	4618      	mov	r0, r3
  800256a:	bd80      	pop	{r7, pc}
  800256c:	40023800 	.word	0x40023800
- 8002570:	08003f98 	.word	0x08003f98
+ 8002570:	08004308 	.word	0x08004308
 
 08002574 <HAL_RCC_GetPCLK2Freq>:
  8002574:	b580      	push	{r7, lr}
@@ -4299,7 +4299,7 @@ int xl320_torqueEnable(XL320_t* xl320){
  8002590:	4618      	mov	r0, r3
  8002592:	bd80      	pop	{r7, pc}
  8002594:	40023800 	.word	0x40023800
- 8002598:	08003f98 	.word	0x08003f98
+ 8002598:	08004308 	.word	0x08004308
 
 0800259c <HAL_RCCEx_PeriphCLKConfig>:
  800259c:	b580      	push	{r7, lr}
@@ -6651,10 +6651,10 @@ int xl320_torqueEnable(XL320_t* xl320){
  8003b0e:	4798      	blx	r3
  8003b10:	3601      	adds	r6, #1
  8003b12:	e7f2      	b.n	8003afa <__libc_init_array+0x1e>
- 8003b14:	08003fa8 	.word	0x08003fa8
- 8003b18:	08003fa8 	.word	0x08003fa8
- 8003b1c:	08003fa8 	.word	0x08003fa8
- 8003b20:	08003fac 	.word	0x08003fac
+ 8003b14:	08004378 	.word	0x08004378
+ 8003b18:	08004378 	.word	0x08004378
+ 8003b1c:	08004378 	.word	0x08004378
+ 8003b20:	0800437c 	.word	0x0800437c
 
 08003b24 <malloc>:
  8003b24:	4b02      	ldr	r3, [pc, #8]	; (8003b30 <malloc+0xc>)
@@ -6704,7 +6704,7 @@ int xl320_torqueEnable(XL320_t* xl320){
  8003b7e:	f1a1 0404 	sub.w	r4, r1, #4
  8003b82:	bfb8      	it	lt
  8003b84:	18e4      	addlt	r4, r4, r3
- 8003b86:	f000 f8e3 	bl	8003d50 <__malloc_lock>
+ 8003b86:	f000 f8e5 	bl	8003d54 <__malloc_lock>
  8003b8a:	4a1e      	ldr	r2, [pc, #120]	; (8003c04 <_free_r+0x94>)
  8003b8c:	9801      	ldr	r0, [sp, #4]
  8003b8e:	6813      	ldr	r3, [r2, #0]
@@ -6713,7 +6713,7 @@ int xl320_torqueEnable(XL320_t* xl320){
  8003b94:	6014      	str	r4, [r2, #0]
  8003b96:	b003      	add	sp, #12
  8003b98:	e8bd 4030 	ldmia.w	sp!, {r4, r5, lr}
- 8003b9c:	f000 b8de 	b.w	8003d5c <__malloc_unlock>
+ 8003b9c:	f000 b8e0 	b.w	8003d60 <__malloc_unlock>
  8003ba0:	42a3      	cmp	r3, r4
  8003ba2:	d908      	bls.n	8003bb6 <_free_r+0x46>
  8003ba4:	6825      	ldr	r5, [r4, #0]
@@ -6813,7 +6813,7 @@ int xl320_torqueEnable(XL320_t* xl320){
  8003c6a:	4630      	mov	r0, r6
  8003c6c:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
  8003c70:	4e2e      	ldr	r6, [pc, #184]	; (8003d2c <_malloc_r+0xe4>)
- 8003c72:	f000 f86d 	bl	8003d50 <__malloc_lock>
+ 8003c72:	f000 f86f 	bl	8003d54 <__malloc_lock>
  8003c76:	6833      	ldr	r3, [r6, #0]
  8003c78:	461c      	mov	r4, r3
  8003c7a:	bb34      	cbnz	r4, 8003cca <_malloc_r+0x82>
@@ -6868,7 +6868,7 @@ int xl320_torqueEnable(XL320_t* xl320){
  8003ce6:	604b      	str	r3, [r1, #4]
  8003ce8:	4638      	mov	r0, r7
  8003cea:	f104 060b 	add.w	r6, r4, #11
- 8003cee:	f000 f835 	bl	8003d5c <__malloc_unlock>
+ 8003cee:	f000 f837 	bl	8003d60 <__malloc_unlock>
  8003cf2:	f026 0607 	bic.w	r6, r6, #7
  8003cf6:	1d23      	adds	r3, r4, #4
  8003cf8:	1af2      	subs	r2, r6, r3
@@ -6891,7 +6891,7 @@ int xl320_torqueEnable(XL320_t* xl320){
  8003d1a:	230c      	movs	r3, #12
  8003d1c:	603b      	str	r3, [r7, #0]
  8003d1e:	4638      	mov	r0, r7
- 8003d20:	f000 f81c 	bl	8003d5c <__malloc_unlock>
+ 8003d20:	f000 f81e 	bl	8003d60 <__malloc_unlock>
  8003d24:	e7a1      	b.n	8003c6a <_malloc_r+0x22>
  8003d26:	6025      	str	r5, [r4, #0]
  8003d28:	e7de      	b.n	8003ce8 <_malloc_r+0xa0>
@@ -6912,25 +6912,25 @@ int xl320_torqueEnable(XL320_t* xl320){
  8003d46:	b103      	cbz	r3, 8003d4a <_sbrk_r+0x1a>
  8003d48:	6023      	str	r3, [r4, #0]
  8003d4a:	bd38      	pop	{r3, r4, r5, pc}
- 8003d4c:	200001b0 	.word	0x200001b0
+ 8003d4c:	200001b4 	.word	0x200001b4
 
-08003d50 <__malloc_lock>:
- 8003d50:	4801      	ldr	r0, [pc, #4]	; (8003d58 <__malloc_lock+0x8>)
- 8003d52:	f000 b809 	b.w	8003d68 <__retarget_lock_acquire_recursive>
- 8003d56:	bf00      	nop
- 8003d58:	200001b4 	.word	0x200001b4
+08003d50 <__retarget_lock_acquire_recursive>:
+ 8003d50:	4770      	bx	lr
 
-08003d5c <__malloc_unlock>:
- 8003d5c:	4801      	ldr	r0, [pc, #4]	; (8003d64 <__malloc_unlock+0x8>)
- 8003d5e:	f000 b804 	b.w	8003d6a <__retarget_lock_release_recursive>
- 8003d62:	bf00      	nop
- 8003d64:	200001b4 	.word	0x200001b4
+08003d52 <__retarget_lock_release_recursive>:
+ 8003d52:	4770      	bx	lr
 
-08003d68 <__retarget_lock_acquire_recursive>:
- 8003d68:	4770      	bx	lr
+08003d54 <__malloc_lock>:
+ 8003d54:	4801      	ldr	r0, [pc, #4]	; (8003d5c <__malloc_lock+0x8>)
+ 8003d56:	f7ff bffb 	b.w	8003d50 <__retarget_lock_acquire_recursive>
+ 8003d5a:	bf00      	nop
+ 8003d5c:	200001b0 	.word	0x200001b0
 
-08003d6a <__retarget_lock_release_recursive>:
- 8003d6a:	4770      	bx	lr
+08003d60 <__malloc_unlock>:
+ 8003d60:	4801      	ldr	r0, [pc, #4]	; (8003d68 <__malloc_unlock+0x8>)
+ 8003d62:	f7ff bff6 	b.w	8003d52 <__retarget_lock_release_recursive>
+ 8003d66:	bf00      	nop
+ 8003d68:	200001b0 	.word	0x200001b0
 
 08003d6c <_init>:
  8003d6c:	b5f8      	push	{r3, r4, r5, r6, r7, lr}

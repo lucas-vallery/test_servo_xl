@@ -72,7 +72,7 @@ void xl320_copyParams2Buff(uint8_t buffStartIndex, uint8_t* buff, uint16_t nbPar
 	}
 }
 
-int xl320_sendCommand(XL320_t* xl320, Instruction_t inst, uint16_t nbParams, uint8_t* params){
+int xl320_sendCommand(XL320_t* xl320, XL320_Instruction_t inst, uint16_t nbParams, uint8_t* params){
 	uint8_t* txBuff = NULL;
 	txBuff = (uint8_t*) malloc((MIN_FRAME_SIZE + nbParams)*sizeof(uint8_t));
 	uint16_t length = nbParams + 3;
@@ -93,19 +93,79 @@ int xl320_sendCommand(XL320_t* xl320, Instruction_t inst, uint16_t nbParams, uin
 	/*
 	HAL_HalfDuplex_EnableTransmitter(&huart6);
 	HAL_UART_Transmit(xl320->uart, txBuff, (MIN_FRAME_SIZE + nbParams)*sizeof(uint8_t), 0x1F4);
-	*/
+	 */
 
 	free(txBuff);
 	return 0;
 }
 
-int xl320_reboot(XL320_t* xl320){
-	xl320_sendCommand(xl320, REBOOT, 0, NULL);
+int xl320_receiveCommand(XL320_t* xl320, uint8_t* rxBuff){
+	xl320->serial.receive(rxBuff, BUFFER_SIZE, 0x1F4);
 
 	return 0;
 }
 
-int xl320_setLedColor(XL320_t* xl320, Color_t color){
+int xl320_checkErrorField(uint8_t errCode){
+	switch(errCode){
+	case NO_ERROR :
+		return 0;
+	case RESULT_FAIL :
+		DEBUG_PRINTF("XL320 ERROR : Failed to process the sent Instruction Packet\r\n");
+		return -1;
+	case INSTR_ERROR :
+		DEBUG_PRINTF("XL320 ERROR : Undefined Instruction has been used or action has been used without Reg/Write\r\n");
+		return -1;
+	case CRC_ERROR :
+		DEBUG_PRINTF("XL320 ERROR : CRC of the sent Packet does not match\r\n");
+		return -1;
+	case DATA_RANGE_ERROR :
+		DEBUG_PRINTF("XL320 ERROR : Data to be written in the corresponding Address is outside the range of the min/max value\r\n");
+		return -1;
+	case DATA_LENGTH_ERROR :
+		DEBUG_PRINTF("XL320 ERROR : Attempt to write Data that is shorter than the data length of the corresponding Address\r\n");
+		return -1;
+	case DATA_LIMIT_ERROR :
+		DEBUG_PRINTF("XL320 ERROR : Data to be written in the corresponding Address is outside of the Limit value\r\n");
+		return -1;
+	case ACCESS_ERROR :
+		DEBUG_PRINTF("XL320 ERROR : Attempt to write a value in an Address that is Read Only or has not been defined\r\n");
+		DEBUG_PRINTF("              Attempt to read a value in an Address that is Write Only or has not been defined\r\n");
+		DEBUG_PRINTF("              Attempt to write a value in the ROM domain while in a state of Torque Enable(ROM Lock)\r\n");
+		return -1;
+	}
+	return 0;
+}
+
+int xl320_check_crcField(uint8_t* buffer){
+	uint16_t nbParam = buffer[LEN_FRAME_OFFSET] + (buffer[LEN_FRAME_OFFSET + 1]<<8) - 3;
+
+	uint16_t crcReceived = buffer[MIN_FRAME_SIZE + nbParam - 1] + (buffer[MIN_FRAME_SIZE + nbParam]<<8);
+	uint16_t crcComputed = xl320_updateCrc(0, buffer, MIN_FRAME_SIZE + nbParam - 2);
+
+	if(crcReceived == crcComputed)
+		return 0;
+	else {
+		DEBUG_PRINTF("XL320 ERROR : CRC of the received Packet does not matched\r\n");
+		return -1;
+	}
+}
+
+int xl320_reboot(XL320_t* xl320){
+	char rxBuff[BUFFER_SIZE] = {0};
+
+	xl320_sendCommand(xl320, REBOOT, 0, NULL);
+	xl320_receiveCommand(xl320, (uint8_t*) &rxBuff);
+
+	if(xl320_check_crcField((uint8_t*)&rxBuff) == -1)
+		return -1;
+
+	if(xl320_checkErrorField(rxBuff[ERR_FRAME_OFFSET]) == -1)
+		return -1;
+
+	return 0;
+}
+
+int xl320_setLedColor(XL320_t* xl320, XL320_Color_t color){
 	uint8_t params[3] = {LED, 0, (uint8_t) color};
 
 	xl320_sendCommand(xl320, WRITE, 3, (uint8_t*) &params);
