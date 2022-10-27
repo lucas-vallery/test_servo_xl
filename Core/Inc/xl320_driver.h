@@ -19,11 +19,12 @@
 /*
  * BAUD RATES
  */
-#define BR_9600			0
-#define BR_57600		1
-#define BR_115200		2
-#define BR_1M			3
-
+typedef enum baudRate{
+	BR_9600 = 0,
+	BR_57600 = 1,
+	BR_115200 = 2,
+	BR_1M = 3
+}XL320_BaudRate_t;
 /*
  * FRAME SIZE
  */
@@ -33,18 +34,21 @@
 /*
  * INSTRUCTIONS
  */
-#define INSTR_WRITE 	0x03
-#define INSTR_REG_WRITE 0x04
-#define INSTR_ACTION	0x05
-#define INSTR_REBOOT 	0x08
+typedef enum Instruction{
+	WRITE = 0x03,
+	REG_WRITE = 0x04,
+	ACTION = 0x05,
+	REBOOT = 0x08
+}Instruction_t;
 
 /*
  * REGISTERS
  */
-#define REG_TORQUE_EN	0x18
-#define REG_LED			0x19
-#define REG_POSITION 	0x1E
-
+typedef enum Register{
+	TORQUE_EN = 0x18,
+	LED = 0x19,
+	POSITION = 0x1E
+}Register_t;
 
 /*
  * LED COLORS
@@ -61,11 +65,15 @@ typedef enum Color{
 }Color;
 
 
+
+
 typedef struct Xl320{
 	UART_HandleTypeDef* uart;
 	uint8_t id;
 	uint8_t br;
 } Xl320;
+
+
 
 void xl320_init(Xl320* xl320, UART_HandleTypeDef* uart, uint8_t id, uint8_t br);
 

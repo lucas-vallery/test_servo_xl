@@ -7,7 +7,7 @@
 
 #include "xl320_driver.h"
 
-void xl320_init(Xl320* xl320, UART_HandleTypeDef* uart, uint8_t id, uint8_t br){
+void xl320_init(Xl320* xl320, UART_HandleTypeDef* uart, uint8_t id, XL320_BaudRate_t br){
 	xl320->uart = uart;
 	xl320->id 	= id;
 	xl320->br	= br;
@@ -71,7 +71,7 @@ void xl320_copyParams2Buff(uint8_t buffStartIndex, uint8_t* buff, uint16_t nbPar
 	}
 }
 
-void xl320_sendCommand(Xl320* xl320, uint8_t inst, uint16_t nbParams, uint8_t* params){
+void xl320_sendCommand(Xl320* xl320, Instruction_t inst, uint16_t nbParams, uint8_t* params){
 	uint8_t* txBuff = NULL;
 	txBuff = (uint8_t*) malloc((MIN_FRAME_SIZE + nbParams)*sizeof(uint8_t));
 	uint16_t length = nbParams + 3;
@@ -95,20 +95,20 @@ void xl320_sendCommand(Xl320* xl320, uint8_t inst, uint16_t nbParams, uint8_t* p
 }
 
 void xl320_reboot(Xl320* xl320){
-	xl320_sendCommand(xl320, INSTR_REBOOT, 0, NULL);
+	xl320_sendCommand(xl320, REBOOT, 0, NULL);
 }
 
 void xl320_setLedColor(Xl320* xl320, Color color){
-	uint8_t params[3] = {REG_LED, 0, (uint8_t) color};
+	uint8_t params[3] = {LED, 0, (uint8_t) color};
 
-	xl320_sendCommand(xl320, INSTR_WRITE, 3, (uint8_t*) &params);
+	xl320_sendCommand(xl320, WRITE, 3, (uint8_t*) &params);
 }
 
 void xl320_setGoalPosition(Xl320* xl320, float goalPositionInDeg){
 	uint16_t position = (uint16_t)(goalPositionInDeg/BIT_RESOLUTION_IN_DEG);
-	uint8_t params[4] = {REG_POSITION, 0, (uint8_t)(position & 0xFF) , (uint8_t)(position >> 8)};
+	uint8_t params[4] = {POSITION, 0, (uint8_t)(position & 0xFF) , (uint8_t)(position >> 8)};
 
-	xl320_sendCommand(xl320, INSTR_WRITE, 4, (uint8_t*) &params);
+	xl320_sendCommand(xl320, WRITE, 4, (uint8_t*) &params);
 }
 
 void xl320_setSpeed(Xl320* xl320, float rpm){
@@ -117,17 +117,17 @@ void xl320_setSpeed(Xl320* xl320, float rpm){
 	uint8_t lowByte = (uint8_t)(speedValue & 0xFF);
 
 	uint8_t params[4] = {LIMIT_SPEED, 0, lowByte, highByte};
-	xl320_sendCommand(xl320, INSTR_WRITE, 3, (uint8_t*) &params);
+	xl320_sendCommand(xl320, WRITE, 3, (uint8_t*) &params);
 }
 
 void xl320_executeAction(Xl320* xl320){
-	xl320_sendCommand(xl320, INSTR_ACTION, 0, NULL);
+	xl320_sendCommand(xl320, ACTION, 0, NULL);
 }
 
 void xl320_torqueEnable(Xl320* xl320){
-	uint8_t params[3] = {REG_TORQUE_EN, 0, ENABLE};
+	uint8_t params[3] = {TORQUE_EN, 0, ENABLE};
 
-	xl320_sendCommand(xl320, INSTR_WRITE, 3, (uint8_t*) &params);
+	xl320_sendCommand(xl320, WRITE, 3, (uint8_t*) &params);
 }
 
 void xl320_blinbling(Xl320* xl320){
