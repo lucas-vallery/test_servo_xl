@@ -1,8 +1,9 @@
-/*
- * xl320_driver.h
+/**
+ * @file xl320_driver.h
  *
- *  Created on: Oct 14, 2022
- *      Author: lucas
+ *	@author Jean-François Castellani
+ *	@author Lucas Vallery
+ *
  */
 #pragma once
 
@@ -110,35 +111,108 @@ typedef enum color_struct{
 typedef int (* adxl345_transmit_t)(uint8_t *pData, uint16_t size, uint32_t timeout);
 typedef int (* adxl345_receive_t)(uint8_t *pData, uint16_t size, uint32_t timeout);
 
+
+/**
+ * @brief Serial interface structure.
+ *
+ * It should be initialized with the corresponding functions according to your target.
+ * The XL320 is a digital servo. It communicates in half-duplex (single-wire) UART.
+ */
 typedef struct xl320_serial_struct{
-	adxl345_transmit_t transmit;
-	adxl345_receive_t receive;
+	adxl345_transmit_t transmit; //!< Should be initialized with the UART-transmit(half-duplex mode) function corresponding to your target
+	adxl345_receive_t receive;	 //!< Should be initialized with the UART-reiceive(half-duplex mode) function corresponding to your target
 }XL320_Serial_t;
 
 /**
- * \struct XL320_t
+ * @brief XL320 object
  *
- * \brief XL320 object
  */
 typedef struct XL320_t{
-	uint8_t id; /*!< ID of the XL320. The default ID is 1*/
-	uint8_t br; /*!< Baude rate of the XL320. The default baude rate is at 1MBaud/s*/
+	uint8_t id; 				//!< ID of the XL320. The default ID is 1
+	uint8_t br; 				//!< Baude rate of the XL320. The default baud rate is at 1MBaud/s
 
-	XL320_Serial_t serial;
+	XL320_Serial_t serial;		//!< Serial abstraction object (Target dependent)
 
 }XL320_t;
 
+/**
+ * @fn xl320_init(XL320_t* xl320,uint8_t id, XL320_BaudRate_t br)
+ *
+ * @brief Initialize XL320 structure
+ *
+ * @param xl320 	Instance to be initialized
+ * @param id 		Device's ID
+ * @param br		Devices's baud-rate
+ *
+ *@return Returns zero if successful
+ */
+int xl320_init(XL320_t* xl320,uint8_t id, XL320_BaudRate_t br);
 
-int xl320_init(XL320_t* xl320,uint8_t id, uint8_t br);
-
+/**
+ * @fn xl320_addHeader2Buff(uint8_t* buff)
+ *
+ * @brief Add an header to a buffer.
+ *
+ * The frame format follows the DYNAMIXEL PROTOCOL 2.0.
+ * The header is build on the following pattern :
+ * 			   Header   			| Reserved
+ * ---------------------------------|-----------
+ * 	0xFF		0xFF		0xFD	|	0x00
+ *
+ * 	@param buff		The buffer in which the function will add the header. The buffer's size must be more than 4
+ */
 void xl320_addHeader2Buff(uint8_t* buff);
 
+/**
+ *	@fn unsigned short xl320_updateCrc(unsigned short crc_accum, unsigned char *data_blk_ptr, unsigned short data_blk_size)
+ *
+ *	@brief Compute the CRC field of a data frame.
+ *
+ *	@param	crc_accum 		Must be set to zero.
+ *	@param 	data_blk_ptr	Pointer in the first element of the data frame.
+ *	@param 	data_blk_size	Size of the data frame.
+ *
+ *	@return The CRC value on 16 bits.
+ */
 unsigned short xl320_updateCrc(unsigned short crc_accum, unsigned char *data_blk_ptr, unsigned short data_blk_size);
 
+/**
+ *  @fn xl320_copyParams2Buff(uint8_t buffStartIndex, uint8_t* buff, uint16_t nbParams, uint8_t* params)
+ *
+ *  @brief Copy a table in an other table
+ *  The number of element between the start index and the end of buff (the receiving table)
+ *  must be greater than the size of params (the buffer to copy).
+ *
+ *  @param buffStartIndex 	The address from which the params will be copied.
+ *  @param buff				The buffer in wich the params will be copied
+ *  @param nbParams 	 	The size of the to-copy table.
+ *  @param params			The table to copy.
+ */
 void xl320_copyParams2Buff(uint8_t buffStartIndex, uint8_t* buff, uint16_t nbParams, uint8_t* params);
 
+/**
+ * @fn xl320_sendCommand(XL320_t* xl320, uint8_t inst, uint16_t nbParams, uint8_t* params)
+ *
+ * @brief Send a command to the corresponding XL320.
+ * If this function is used according to the DYNAMIXEL PROTOCOLE 2.0 the address field is coded on 1 byte. The the parameters table should looks like the following example.
+ * The 0 stands for the most significant bits of the address which are not used.
+ *
+ * ~~~~~~{.c}
+ * uint8_t params[3] = {ADDR, 0, ..., ...}
+ * ~~~~~~
+ *
+ * @param xl320 	XL320 device
+ * @param inst	 	Instruction
+ * @param nbParams	The number of parameters. Can be 0
+ * @param params 	The pointer on the table containing the parameters. Can be NULL
+ *
+ * @return 			Returns 0 if success and -1 if failed
+ */
 int xl320_sendCommand(XL320_t* xl320, uint8_t inst, uint16_t nbParams, uint8_t* params);
 
+/**
+ * @fn xl320_receiveCommand(XL320_t* xl320, uint8_t* rxBuff)
+ */
 int xl320_receiveCommand(XL320_t* xl320, uint8_t* rxBuff);
 
 int xl320_checkErrorField(uint8_t errCode);

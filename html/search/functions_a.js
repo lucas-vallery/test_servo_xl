@@ -1,0 +1,8 @@
+var searchData=
+[
+  ['xl320_5faddheader2buff_0',['xl320_addHeader2Buff',['../xl320__driver_8h.html#ad4b109c121e6a73abed51bf13897f558',1,'xl320_addHeader2Buff(uint8_t *buff):&#160;xl320_driver.c'],['../xl320__driver_8c.html#a1f7b52f507f3fe443f7bd7b0fab3631a',1,'xl320_addHeader2Buff(uint8_t *buff):&#160;xl320_driver.c']]],
+  ['xl320_5fcopyparams2buff_1',['xl320_copyParams2Buff',['../xl320__driver_8h.html#a10e9257baf273a84235255eab58145d7',1,'xl320_copyParams2Buff(uint8_t buffStartIndex, uint8_t *buff, uint16_t nbParams, uint8_t *params):&#160;xl320_driver.c'],['../xl320__driver_8c.html#aabc37bd5b727c3cd847f518ecd2a7261',1,'xl320_copyParams2Buff(uint8_t buffStartIndex, uint8_t *buff, uint16_t nbParams, uint8_t *params):&#160;xl320_driver.c']]],
+  ['xl320_5finit_2',['xl320_init',['../xl320__driver_8h.html#abdfa1e52e7d085e3d80f2cd3301a154b',1,'xl320_init(XL320_t *xl320, uint8_t id, XL320_BaudRate_t br):&#160;xl320_driver.c'],['../xl320__driver_8c.html#ae74812183aa2c0d32b158025414faa52',1,'xl320_init(XL320_t *xl320, uint8_t id, XL320_BaudRate_t br):&#160;xl320_driver.c']]],
+  ['xl320_5fsendcommand_3',['xl320_sendCommand',['../xl320__driver_8h.html#a23760a6974fe7a9092fa8bc5757d81f9',1,'xl320_driver.h']]],
+  ['xl320_5fupdatecrc_4',['xl320_updateCrc',['../xl320__driver_8h.html#a5d8deba3b0b5b80260e2661891f9a07a',1,'xl320_updateCrc(unsigned short crc_accum, unsigned char *data_blk_ptr, unsigned short data_blk_size):&#160;xl320_driver.c'],['../xl320__driver_8c.html#a5d8deba3b0b5b80260e2661891f9a07a',1,'xl320_updateCrc(unsigned short crc_accum, unsigned char *data_blk_ptr, unsigned short data_blk_size):&#160;xl320_driver.c']]]
+];

@@ -1,10 +1,10 @@
-/*
- * xl320_driver.c
+/**
+ * @file xl320_driver.c
  *
- *  Created on: Oct 14, 2022
- *      Author: lucas
+ *	@author Jean-François Castellani
+ *	@author Lucas Vallery
+ *
  */
-
 #include "xl320_driver.h"
 
 int xl320_init(XL320_t* xl320, uint8_t id, XL320_BaudRate_t br){
@@ -75,6 +75,12 @@ void xl320_copyParams2Buff(uint8_t buffStartIndex, uint8_t* buff, uint16_t nbPar
 int xl320_sendCommand(XL320_t* xl320, XL320_Instruction_t inst, uint16_t nbParams, uint8_t* params){
 	uint8_t* txBuff = NULL;
 	txBuff = (uint8_t*) malloc((MIN_FRAME_SIZE + nbParams)*sizeof(uint8_t));
+
+	if(txBuff == NULL){
+		DEBUG_PRINTF("XL320 ERROT : Malloc failed\r\n");
+		return -1;
+	}
+
 	uint16_t length = nbParams + 3;
 
 	xl320_addHeader2Buff(txBuff);
@@ -90,10 +96,6 @@ int xl320_sendCommand(XL320_t* xl320, XL320_Instruction_t inst, uint16_t nbParam
 	txBuff[(MIN_FRAME_SIZE + nbParams) - 1] = (uint8_t) (crc >> 8);
 
 	xl320->serial.transmit(txBuff, (MIN_FRAME_SIZE + nbParams)*sizeof(uint8_t), 0x1F4);
-	/*
-	HAL_HalfDuplex_EnableTransmitter(&huart6);
-	HAL_UART_Transmit(xl320->uart, txBuff, (MIN_FRAME_SIZE + nbParams)*sizeof(uint8_t), 0x1F4);
-	 */
 
 	free(txBuff);
 	return 0;
@@ -188,7 +190,7 @@ int xl320_setSpeed(XL320_t* xl320, float rpm){
 	uint8_t lowByte = (uint8_t)(speedValue & 0xFF);
 
 	uint8_t params[4] = {LIMIT_SPEED, 0, lowByte, highByte};
-	xl320_sendCommand(xl320, WRITE, 3, (uint8_t*) &params);
+	xl320_sendCommand(xl320, WRITE, 4, (uint8_t*) &params);
 
 	return 0;
 }
@@ -228,47 +230,3 @@ int xl320_blinbling(XL320_t* xl320){
 	return 0;
 }
 
-
-/*
-void xl320_clearReceiveBuffer(uint8_t* buffer) {
-	int i;
-	for(i = 0; i < 32; i++){
-		buffer[i] = 0;
-	}
-}
-
-
-void xl320_sendCommand(const uin8_t servoId, uint8_t* packet, uint16_t packetLength) {
-}
-
-void xl320_addHeader(){
-	uint8_t headerPacket[] = {0xFF, 0xFF, 0xFD};
-}
-
-void xl320_sendCommand(const uint8_t servoId, uint8_t* instructionPacket) {
-
-}
-
-void xl320_ping(const uint8_t servoId) {
-	uint8_t pingPacket[] = {0xFF, 0xFF, 0xFD, 0x00, servoId, 0x03, 0x00, 0x01, 0x0, 0x0};
-	unsigned short crc = xl320_updateCrc(0, pingPacket, 8);
-	uint8_t receiveBuffer[32];
-	xl320_clearReceiveBuffer(receiveBuffer);
-
-	pingPacket[8] = (uint8_t) (crc & 0xFF);
-	pingPacket[9] = (uint8_t) (crc >> 8);
-
-	HAL_HalfDuplex_EnableTransmitter(&huart6);
-	HAL_UART_Transmit(&huart6, pingPacket, 10*sizeof(char), 0x1F4);
-	printf("sent\r\n");
-
-	HAL_HalfDuplex_EnableReceiver(&huart6);
-	HAL_UART_Receive(&huart6, receiveBuffer, 32, 0x1F4);
-	int i;
-	if(receiveBuffer[0] != 0) {
-		for(i= 0; i < 32; i++){
-			printf("Received : %d\r\n", receiveBuffer[i]);
-		}
-	}
-}
- */

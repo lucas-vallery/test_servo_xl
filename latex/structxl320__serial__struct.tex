@@ -1,16 +1,30 @@
 \hypertarget{structxl320__serial__struct}{}\doxysection{xl320\+\_\+serial\+\_\+struct Struct Reference}
 \label{structxl320__serial__struct}\index{xl320\_serial\_struct@{xl320\_serial\_struct}}
-\doxysubsection*{Public Attributes}
+
+
+Serial interface structure.  
+
+
+
+
+{\ttfamily \#include $<$xl320\+\_\+driver.\+h$>$}
+
+\doxysubsection*{Data Fields}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{structxl320__serial__struct_a3a1f07dacae36baabc9f09e8c9fabd90}\label{structxl320__serial__struct_a3a1f07dacae36baabc9f09e8c9fabd90}} 
 adxl345\+\_\+transmit\+\_\+t {\bfseries transmit}
-\item 
+\begin{DoxyCompactList}\small\item\em Should be initialized with the UART-\/transmit(half-\/duplex mode) function corresponding to your target. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structxl320__serial__struct_aaf88c53cdc0170cb6210b8ddf4c22e81}\label{structxl320__serial__struct_aaf88c53cdc0170cb6210b8ddf4c22e81}} 
 adxl345\+\_\+receive\+\_\+t {\bfseries receive}
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Should be initialized with the UART-\/reiceive(half-\/duplex mode) function corresponding to your target. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
+
+\doxysubsection{Detailed Description}
+Serial interface structure. 
+
+It should be initialized with the corresponding functions according to your target. The XL320 is a digital servo. It communicates in half-\/duplex (single-\/wire) UART. 
 
 The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-Core/\+Inc/xl320\+\_\+driver.\+h\end{DoxyCompactItemize}
+Core/\+Inc/\mbox{\hyperlink{xl320__driver_8h}{xl320\+\_\+driver.\+h}}\end{DoxyCompactItemize}

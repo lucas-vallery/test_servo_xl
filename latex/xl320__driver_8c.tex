@@ -1,0 +1,152 @@
+\hypertarget{xl320__driver_8c}{}\doxysection{Core/\+Src/xl320\+\_\+driver.c File Reference}
+\label{xl320__driver_8c}\index{Core/Src/xl320\_driver.c@{Core/Src/xl320\_driver.c}}
+{\ttfamily \#include \char`\"{}xl320\+\_\+driver.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{xl320__driver_8c_ae74812183aa2c0d32b158025414faa52}{xl320\+\_\+init}} (\mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} $\ast$xl320, uint8\+\_\+t id, XL320\+\_\+\+Baud\+Rate\+\_\+t br)
+\begin{DoxyCompactList}\small\item\em Initialize XL320 structure. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{xl320__driver_8c_a1f7b52f507f3fe443f7bd7b0fab3631a}{xl320\+\_\+add\+Header2\+Buff}} (uint8\+\_\+t $\ast$buff)
+\begin{DoxyCompactList}\small\item\em Add an header to a buffer. \end{DoxyCompactList}\item 
+unsigned short \mbox{\hyperlink{xl320__driver_8c_a5d8deba3b0b5b80260e2661891f9a07a}{xl320\+\_\+update\+Crc}} (unsigned short crc\+\_\+accum, unsigned char $\ast$data\+\_\+blk\+\_\+ptr, unsigned short data\+\_\+blk\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Compute the CRC field of a data frame. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{xl320__driver_8c_aabc37bd5b727c3cd847f518ecd2a7261}{xl320\+\_\+copy\+Params2\+Buff}} (uint8\+\_\+t buff\+Start\+Index, uint8\+\_\+t $\ast$buff, uint16\+\_\+t nb\+Params, uint8\+\_\+t $\ast$params)
+\begin{DoxyCompactList}\small\item\em Copy a table in an other table The number of element between the start index and the end of buff (the receiving table) must be greater than the size of params (the buffer to copy). \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{xl320__driver_8c_a7e4929164c8073e9eb7fd0c49027b2f7}\label{xl320__driver_8c_a7e4929164c8073e9eb7fd0c49027b2f7}} 
+int {\bfseries xl320\+\_\+send\+Command} (\mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} $\ast$xl320, XL320\+\_\+\+Instruction\+\_\+t inst, uint16\+\_\+t nb\+Params, uint8\+\_\+t $\ast$params)
+\item 
+\mbox{\Hypertarget{xl320__driver_8c_ad9c13ae66ad9ebf4f4359454617a3d15}\label{xl320__driver_8c_ad9c13ae66ad9ebf4f4359454617a3d15}} 
+int {\bfseries xl320\+\_\+receive\+Command} (\mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} $\ast$xl320, uint8\+\_\+t $\ast$rx\+Buff)
+\item 
+\mbox{\Hypertarget{xl320__driver_8c_ae51cd4d4af14a91924e804b5da2573c6}\label{xl320__driver_8c_ae51cd4d4af14a91924e804b5da2573c6}} 
+int {\bfseries xl320\+\_\+check\+Error\+Field} (uint8\+\_\+t err\+Code)
+\item 
+\mbox{\Hypertarget{xl320__driver_8c_ad84ce8ca8bc39438ce651a56b7f42061}\label{xl320__driver_8c_ad84ce8ca8bc39438ce651a56b7f42061}} 
+int {\bfseries xl320\+\_\+check\+\_\+crc\+Field} (uint8\+\_\+t $\ast$buffer)
+\item 
+\mbox{\Hypertarget{xl320__driver_8c_ae53f811f7d7c900bd0dfa95ca642aa31}\label{xl320__driver_8c_ae53f811f7d7c900bd0dfa95ca642aa31}} 
+int {\bfseries xl320\+\_\+reboot} (\mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} $\ast$xl320)
+\item 
+\mbox{\Hypertarget{xl320__driver_8c_a46e0f4da869ac67dca638182b9ae689b}\label{xl320__driver_8c_a46e0f4da869ac67dca638182b9ae689b}} 
+int {\bfseries xl320\+\_\+set\+Led\+Color} (\mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} $\ast$xl320, XL320\+\_\+\+Color\+\_\+t color)
+\item 
+\mbox{\Hypertarget{xl320__driver_8c_a8267fc421e562559460bb088d9432fa0}\label{xl320__driver_8c_a8267fc421e562559460bb088d9432fa0}} 
+int {\bfseries xl320\+\_\+set\+Goal\+Position} (\mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} $\ast$xl320, float goal\+Position\+In\+Deg)
+\item 
+\mbox{\Hypertarget{xl320__driver_8c_a9e9b9abac937406ed8831dc6e661b9ae}\label{xl320__driver_8c_a9e9b9abac937406ed8831dc6e661b9ae}} 
+int {\bfseries xl320\+\_\+set\+Speed} (\mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} $\ast$xl320, float rpm)
+\item 
+\mbox{\Hypertarget{xl320__driver_8c_a04fac70f61b3e4bccffc8bf55b681934}\label{xl320__driver_8c_a04fac70f61b3e4bccffc8bf55b681934}} 
+int {\bfseries xl320\+\_\+execute\+Action} (\mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} $\ast$xl320)
+\item 
+\mbox{\Hypertarget{xl320__driver_8c_abeead0c488c0a7a2629f919c0087560c}\label{xl320__driver_8c_abeead0c488c0a7a2629f919c0087560c}} 
+int {\bfseries xl320\+\_\+torque\+Enable} (\mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} $\ast$xl320)
+\item 
+\mbox{\Hypertarget{xl320__driver_8c_ab21cd7d126a09ba13720afd51ce86cf6}\label{xl320__driver_8c_ab21cd7d126a09ba13720afd51ce86cf6}} 
+int {\bfseries xl320\+\_\+blinbling} (\mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} $\ast$xl320)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Jean-\/\+François Castellani 
+
+Lucas Vallery 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{xl320__driver_8c_a1f7b52f507f3fe443f7bd7b0fab3631a}\label{xl320__driver_8c_a1f7b52f507f3fe443f7bd7b0fab3631a}} 
+\index{xl320\_driver.c@{xl320\_driver.c}!xl320\_addHeader2Buff@{xl320\_addHeader2Buff}}
+\index{xl320\_addHeader2Buff@{xl320\_addHeader2Buff}!xl320\_driver.c@{xl320\_driver.c}}
+\doxysubsubsection{\texorpdfstring{xl320\_addHeader2Buff()}{xl320\_addHeader2Buff()}}
+{\footnotesize\ttfamily void xl320\+\_\+add\+Header2\+Buff (\begin{DoxyParamCaption}\item[{uint8\+\_\+t $\ast$}]{buff }\end{DoxyParamCaption})}
+
+
+
+Add an header to a buffer. 
+
+The frame format follows the DYNAMIXEL PROTOCOL 2.\+0. The header is build on the following pattern \+: \tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Header   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Reserved    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Header   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Reserved    }\\\cline{1-2}
+\endhead
+0x\+FF 0x\+FF 0x\+FD   &0x00   \\\cline{1-2}
+\end{longtabu}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em buff} & The buffer in which the function will add the header. The buffer\textquotesingle{}s size must be more than 4 \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{xl320__driver_8c_aabc37bd5b727c3cd847f518ecd2a7261}\label{xl320__driver_8c_aabc37bd5b727c3cd847f518ecd2a7261}} 
+\index{xl320\_driver.c@{xl320\_driver.c}!xl320\_copyParams2Buff@{xl320\_copyParams2Buff}}
+\index{xl320\_copyParams2Buff@{xl320\_copyParams2Buff}!xl320\_driver.c@{xl320\_driver.c}}
+\doxysubsubsection{\texorpdfstring{xl320\_copyParams2Buff()}{xl320\_copyParams2Buff()}}
+{\footnotesize\ttfamily void xl320\+\_\+copy\+Params2\+Buff (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{buff\+Start\+Index,  }\item[{uint8\+\_\+t $\ast$}]{buff,  }\item[{uint16\+\_\+t}]{nb\+Params,  }\item[{uint8\+\_\+t $\ast$}]{params }\end{DoxyParamCaption})}
+
+
+
+Copy a table in an other table The number of element between the start index and the end of buff (the receiving table) must be greater than the size of params (the buffer to copy). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buff\+Start\+Index} & The address from which the params will be copied. \\
+\hline
+{\em buff} & The buffer in wich the params will be copied \\
+\hline
+{\em nb\+Params} & The size of the to-\/copy table. \\
+\hline
+{\em params} & The table to copy. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{xl320__driver_8c_ae74812183aa2c0d32b158025414faa52}\label{xl320__driver_8c_ae74812183aa2c0d32b158025414faa52}} 
+\index{xl320\_driver.c@{xl320\_driver.c}!xl320\_init@{xl320\_init}}
+\index{xl320\_init@{xl320\_init}!xl320\_driver.c@{xl320\_driver.c}}
+\doxysubsubsection{\texorpdfstring{xl320\_init()}{xl320\_init()}}
+{\footnotesize\ttfamily int xl320\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} $\ast$}]{xl320,  }\item[{uint8\+\_\+t}]{id,  }\item[{XL320\+\_\+\+Baud\+Rate\+\_\+t}]{br }\end{DoxyParamCaption})}
+
+
+
+Initialize XL320 structure. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xl320} & Instance to be initialized \\
+\hline
+{\em id} & Device\textquotesingle{}s ID \\
+\hline
+{\em br} & Devices\textquotesingle{}s baud-\/rate\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns zero if successful 
+\end{DoxyReturn}
+\mbox{\Hypertarget{xl320__driver_8c_a5d8deba3b0b5b80260e2661891f9a07a}\label{xl320__driver_8c_a5d8deba3b0b5b80260e2661891f9a07a}} 
+\index{xl320\_driver.c@{xl320\_driver.c}!xl320\_updateCrc@{xl320\_updateCrc}}
+\index{xl320\_updateCrc@{xl320\_updateCrc}!xl320\_driver.c@{xl320\_driver.c}}
+\doxysubsubsection{\texorpdfstring{xl320\_updateCrc()}{xl320\_updateCrc()}}
+{\footnotesize\ttfamily unsigned short xl320\+\_\+update\+Crc (\begin{DoxyParamCaption}\item[{unsigned short}]{crc\+\_\+accum,  }\item[{unsigned char $\ast$}]{data\+\_\+blk\+\_\+ptr,  }\item[{unsigned short}]{data\+\_\+blk\+\_\+size }\end{DoxyParamCaption})}
+
+
+
+Compute the CRC field of a data frame. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em crc\+\_\+accum} & Must be set to zero. \\
+\hline
+{\em data\+\_\+blk\+\_\+ptr} & Pointer in the first element of the data frame. \\
+\hline
+{\em data\+\_\+blk\+\_\+size} & Size of the data frame.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The CRC value on 16 bits. 
+\end{DoxyReturn}

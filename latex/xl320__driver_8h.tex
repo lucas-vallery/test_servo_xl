@@ -1,0 +1,326 @@
+\hypertarget{xl320__driver_8h}{}\doxysection{Core/\+Inc/xl320\+\_\+driver.h File Reference}
+\label{xl320__driver_8h}\index{Core/Inc/xl320\_driver.h@{Core/Inc/xl320\_driver.h}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}main.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}usart.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}uart\+\_\+half\+\_\+duplex\+\_\+driver.\+h\char`\"{}}\newline
+\doxysubsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structxl320__serial__struct}{xl320\+\_\+serial\+\_\+struct}}
+\begin{DoxyCompactList}\small\item\em Serial interface structure. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em XL320 object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_a00128e8909d8dd7178741c80a0d99da0}\label{xl320__driver_8h_a00128e8909d8dd7178741c80a0d99da0}} 
+\#define {\bfseries DEBUG\+\_\+\+XL320\+\_\+\+ENABLE}
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_a5fea181ca98acce4a0ad64677548f996}\label{xl320__driver_8h_a5fea181ca98acce4a0ad64677548f996}} 
+\#define {\bfseries DEBUG\+\_\+\+PRINTF}(x)~printf(x)
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_a0fac018b472a4ebf20c4df766771e97b}\label{xl320__driver_8h_a0fac018b472a4ebf20c4df766771e97b}} 
+\#define {\bfseries BIT\+\_\+\+RESOLUTION\+\_\+\+IN\+\_\+\+DEG}~0.\+29
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_acd9d5208efd4a336e38b3ba4cc545b11}\label{xl320__driver_8h_acd9d5208efd4a336e38b3ba4cc545b11}} 
+\#define {\bfseries RESOLUTION\+\_\+\+SPEED}~0.\+111
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_ab8e4ddb96481366592d2363a448f0af4}\label{xl320__driver_8h_ab8e4ddb96481366592d2363a448f0af4}} 
+\#define {\bfseries LIMIT\+\_\+\+SPEED}~114
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_a86aeb2c06c5d0f1d35466d34d32ccbb5}\label{xl320__driver_8h_a86aeb2c06c5d0f1d35466d34d32ccbb5}} 
+\#define {\bfseries GATE\+\_\+\+CLOSED}~69
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_a6b20d41d6252e9871430c242cb1a56e7}\label{xl320__driver_8h_a6b20d41d6252e9871430c242cb1a56e7}} 
+\#define {\bfseries BUFFER\+\_\+\+SIZE}~32
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_a50a207c28cb59d177a9db611cc1faea4}\label{xl320__driver_8h_a50a207c28cb59d177a9db611cc1faea4}} 
+\#define {\bfseries MIN\+\_\+\+FRAME\+\_\+\+SIZE}~10
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_a675c19b75f90406545022c9d2952ecf1}\label{xl320__driver_8h_a675c19b75f90406545022c9d2952ecf1}} 
+\#define {\bfseries CRC\+\_\+\+FIELD\+\_\+\+SIZE}~2
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_a39ac355841383e4b3aae440502770cc2}\label{xl320__driver_8h_a39ac355841383e4b3aae440502770cc2}} 
+\#define {\bfseries ERR\+\_\+\+FRAME\+\_\+\+OFFSET}~7
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_a58844a95c4dadf8df9863bc6722de94a}\label{xl320__driver_8h_a58844a95c4dadf8df9863bc6722de94a}} 
+\#define {\bfseries LEN\+\_\+\+FRAME\+\_\+\+OFFSET}~5
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_a26d806c4d64a3c486296fd32507b01c4}\label{xl320__driver_8h_a26d806c4d64a3c486296fd32507b01c4}} 
+typedef enum baud\+Rate\+\_\+struct {\bfseries XL320\+\_\+\+Baud\+Rate\+\_\+t}
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_a9951e9ce059201c96e5070d48675ed27}\label{xl320__driver_8h_a9951e9ce059201c96e5070d48675ed27}} 
+typedef enum instruction\+\_\+struct {\bfseries XL320\+\_\+\+Instruction\+\_\+t}
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_a2cb58b0c5e628746c2ab5d96bd890483}\label{xl320__driver_8h_a2cb58b0c5e628746c2ab5d96bd890483}} 
+typedef enum error\+\_\+struct {\bfseries XL320\+\_\+\+Error\+\_\+t}
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_a7d3a70211847a0eb14882ac159e1cb35}\label{xl320__driver_8h_a7d3a70211847a0eb14882ac159e1cb35}} 
+typedef enum register\+\_\+struct {\bfseries XL320\+\_\+\+Register\+\_\+t}
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_aa8922ed46771afaf3b1974d105538a37}\label{xl320__driver_8h_aa8922ed46771afaf3b1974d105538a37}} 
+typedef enum color\+\_\+struct {\bfseries XL320\+\_\+\+Color\+\_\+t}
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_a61df4e2deae73a63f209f652d78a9d66}\label{xl320__driver_8h_a61df4e2deae73a63f209f652d78a9d66}} 
+typedef int($\ast$ {\bfseries adxl345\+\_\+transmit\+\_\+t}) (uint8\+\_\+t $\ast$p\+Data, uint16\+\_\+t size, uint32\+\_\+t timeout)
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_aef0b352449b2d1b6a7de6083b00ed6ac}\label{xl320__driver_8h_aef0b352449b2d1b6a7de6083b00ed6ac}} 
+typedef int($\ast$ {\bfseries adxl345\+\_\+receive\+\_\+t}) (uint8\+\_\+t $\ast$p\+Data, uint16\+\_\+t size, uint32\+\_\+t timeout)
+\item 
+typedef struct \mbox{\hyperlink{structxl320__serial__struct}{xl320\+\_\+serial\+\_\+struct}} \mbox{\hyperlink{xl320__driver_8h_ad38e59afe80a731a2600bb76b89aa928}{XL320\+\_\+\+Serial\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Serial interface structure. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} \mbox{\hyperlink{xl320__driver_8h_a0b7c2864bc2c0cbcd9a6bfa84f1f6074}{XL320\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em XL320 object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_ad7f2619e8d91a219c0c9917e0c8e3818}\label{xl320__driver_8h_ad7f2619e8d91a219c0c9917e0c8e3818}} 
+enum {\bfseries baud\+Rate\+\_\+struct} \{ {\bfseries BR\+\_\+9600} = 0
+, {\bfseries BR\+\_\+57600} = 1
+, {\bfseries BR\+\_\+115200} = 2
+, {\bfseries BR\+\_\+1M} = 3
+ \}
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_a875217d6c1eb868f6a1f30ed31d526f1}\label{xl320__driver_8h_a875217d6c1eb868f6a1f30ed31d526f1}} 
+enum {\bfseries instruction\+\_\+struct} \{ {\bfseries WRITE} = 0x03
+, {\bfseries REG\+\_\+\+WRITE} = 0x04
+, {\bfseries ACTION} = 0x05
+, {\bfseries REBOOT} = 0x08
+ \}
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_a8c21e4cecdfdf1f90e099ed5248e1dbc}\label{xl320__driver_8h_a8c21e4cecdfdf1f90e099ed5248e1dbc}} 
+enum {\bfseries error\+\_\+struct} \{ \newline
+{\bfseries NO\+\_\+\+ERROR} = 0x00
+, {\bfseries RESULT\+\_\+\+FAIL} = 0x01
+, {\bfseries INSTR\+\_\+\+ERROR} = 0x02
+, {\bfseries CRC\+\_\+\+ERROR} = 0x03
+, \newline
+{\bfseries DATA\+\_\+\+RANGE\+\_\+\+ERROR} = 0x04
+, {\bfseries DATA\+\_\+\+LENGTH\+\_\+\+ERROR} = 0x05
+, {\bfseries DATA\+\_\+\+LIMIT\+\_\+\+ERROR} = 0x06
+, {\bfseries ACCESS\+\_\+\+ERROR} = 0x07
+ \}
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_a98924f113c23bd88e2ccd7386c31b8fa}\label{xl320__driver_8h_a98924f113c23bd88e2ccd7386c31b8fa}} 
+enum {\bfseries register\+\_\+struct} \{ {\bfseries TORQUE\+\_\+\+EN} = 0x18
+, {\bfseries LED} = 0x19
+, {\bfseries POSITION} = 0x1E
+ \}
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_afb4d38906e3e3e149d9a77b0286f36a1}\label{xl320__driver_8h_afb4d38906e3e3e149d9a77b0286f36a1}} 
+enum {\bfseries color\+\_\+struct} \{ \newline
+{\bfseries Off}
+, {\bfseries Red}
+, {\bfseries Green}
+, {\bfseries Yellow}
+, \newline
+{\bfseries Blue}
+, {\bfseries Purple}
+, {\bfseries Cyan}
+, {\bfseries White}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{xl320__driver_8h_abdfa1e52e7d085e3d80f2cd3301a154b}{xl320\+\_\+init}} (\mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} $\ast$xl320, uint8\+\_\+t id, XL320\+\_\+\+Baud\+Rate\+\_\+t br)
+\begin{DoxyCompactList}\small\item\em Initialize XL320 structure. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{xl320__driver_8h_ad4b109c121e6a73abed51bf13897f558}{xl320\+\_\+add\+Header2\+Buff}} (uint8\+\_\+t $\ast$buff)
+\begin{DoxyCompactList}\small\item\em Add an header to a buffer. \end{DoxyCompactList}\item 
+unsigned short \mbox{\hyperlink{xl320__driver_8h_a5d8deba3b0b5b80260e2661891f9a07a}{xl320\+\_\+update\+Crc}} (unsigned short crc\+\_\+accum, unsigned char $\ast$data\+\_\+blk\+\_\+ptr, unsigned short data\+\_\+blk\+\_\+size)
+\begin{DoxyCompactList}\small\item\em Compute the CRC field of a data frame. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{xl320__driver_8h_a10e9257baf273a84235255eab58145d7}{xl320\+\_\+copy\+Params2\+Buff}} (uint8\+\_\+t buff\+Start\+Index, uint8\+\_\+t $\ast$buff, uint16\+\_\+t nb\+Params, uint8\+\_\+t $\ast$params)
+\begin{DoxyCompactList}\small\item\em Copy a table in an other table The number of element between the start index and the end of buff (the receiving table) must be greater than the size of params (the buffer to copy). \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{xl320__driver_8h_a23760a6974fe7a9092fa8bc5757d81f9}{xl320\+\_\+send\+Command}} (\mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} $\ast$xl320, uint8\+\_\+t inst, uint16\+\_\+t nb\+Params, uint8\+\_\+t $\ast$params)
+\begin{DoxyCompactList}\small\item\em Send a command to the corresponding XL320. If this function is used according to the DYNAMIXEL PROTOCOLE 2.\+0 the address field is coded on 1 byte. The the parameters table should looks like the following example. The 0 stands for the most significant bits of the address which are not used. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{xl320__driver_8h_ad9c13ae66ad9ebf4f4359454617a3d15}\label{xl320__driver_8h_ad9c13ae66ad9ebf4f4359454617a3d15}} 
+int {\bfseries xl320\+\_\+receive\+Command} (\mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} $\ast$xl320, uint8\+\_\+t $\ast$rx\+Buff)
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_ae51cd4d4af14a91924e804b5da2573c6}\label{xl320__driver_8h_ae51cd4d4af14a91924e804b5da2573c6}} 
+int {\bfseries xl320\+\_\+check\+Error\+Field} (uint8\+\_\+t err\+Code)
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_ad84ce8ca8bc39438ce651a56b7f42061}\label{xl320__driver_8h_ad84ce8ca8bc39438ce651a56b7f42061}} 
+int {\bfseries xl320\+\_\+check\+\_\+crc\+Field} (uint8\+\_\+t $\ast$buffer)
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_ae53f811f7d7c900bd0dfa95ca642aa31}\label{xl320__driver_8h_ae53f811f7d7c900bd0dfa95ca642aa31}} 
+int {\bfseries xl320\+\_\+reboot} (\mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} $\ast$xl320)
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_a46e0f4da869ac67dca638182b9ae689b}\label{xl320__driver_8h_a46e0f4da869ac67dca638182b9ae689b}} 
+int {\bfseries xl320\+\_\+set\+Led\+Color} (\mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} $\ast$xl320, XL320\+\_\+\+Color\+\_\+t color)
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_a8267fc421e562559460bb088d9432fa0}\label{xl320__driver_8h_a8267fc421e562559460bb088d9432fa0}} 
+int {\bfseries xl320\+\_\+set\+Goal\+Position} (\mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} $\ast$xl320, float goal\+Position\+In\+Deg)
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_a9e9b9abac937406ed8831dc6e661b9ae}\label{xl320__driver_8h_a9e9b9abac937406ed8831dc6e661b9ae}} 
+int {\bfseries xl320\+\_\+set\+Speed} (\mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} $\ast$xl320, float rpm)
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_a04fac70f61b3e4bccffc8bf55b681934}\label{xl320__driver_8h_a04fac70f61b3e4bccffc8bf55b681934}} 
+int {\bfseries xl320\+\_\+execute\+Action} (\mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} $\ast$xl320)
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_abeead0c488c0a7a2629f919c0087560c}\label{xl320__driver_8h_abeead0c488c0a7a2629f919c0087560c}} 
+int {\bfseries xl320\+\_\+torque\+Enable} (\mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} $\ast$xl320)
+\item 
+\mbox{\Hypertarget{xl320__driver_8h_ab21cd7d126a09ba13720afd51ce86cf6}\label{xl320__driver_8h_ab21cd7d126a09ba13720afd51ce86cf6}} 
+int {\bfseries xl320\+\_\+blinbling} (\mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} $\ast$xl320)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Jean-\/\+François Castellani 
+
+Lucas Vallery 
+\end{DoxyAuthor}
+
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{xl320__driver_8h_ad38e59afe80a731a2600bb76b89aa928}\label{xl320__driver_8h_ad38e59afe80a731a2600bb76b89aa928}} 
+\index{xl320\_driver.h@{xl320\_driver.h}!XL320\_Serial\_t@{XL320\_Serial\_t}}
+\index{XL320\_Serial\_t@{XL320\_Serial\_t}!xl320\_driver.h@{xl320\_driver.h}}
+\doxysubsubsection{\texorpdfstring{XL320\_Serial\_t}{XL320\_Serial\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structxl320__serial__struct}{xl320\+\_\+serial\+\_\+struct}} \mbox{\hyperlink{xl320__driver_8h_ad38e59afe80a731a2600bb76b89aa928}{XL320\+\_\+\+Serial\+\_\+t}}}
+
+
+
+Serial interface structure. 
+
+It should be initialized with the corresponding functions according to your target. The XL320 is a digital servo. It communicates in half-\/duplex (single-\/wire) UART. \mbox{\Hypertarget{xl320__driver_8h_a0b7c2864bc2c0cbcd9a6bfa84f1f6074}\label{xl320__driver_8h_a0b7c2864bc2c0cbcd9a6bfa84f1f6074}} 
+\index{xl320\_driver.h@{xl320\_driver.h}!XL320\_t@{XL320\_t}}
+\index{XL320\_t@{XL320\_t}!xl320\_driver.h@{xl320\_driver.h}}
+\doxysubsubsection{\texorpdfstring{XL320\_t}{XL320\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} \mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}}}
+
+
+
+XL320 object. 
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{xl320__driver_8h_ad4b109c121e6a73abed51bf13897f558}\label{xl320__driver_8h_ad4b109c121e6a73abed51bf13897f558}} 
+\index{xl320\_driver.h@{xl320\_driver.h}!xl320\_addHeader2Buff@{xl320\_addHeader2Buff}}
+\index{xl320\_addHeader2Buff@{xl320\_addHeader2Buff}!xl320\_driver.h@{xl320\_driver.h}}
+\doxysubsubsection{\texorpdfstring{xl320\_addHeader2Buff()}{xl320\_addHeader2Buff()}}
+{\footnotesize\ttfamily xl320\+\_\+add\+Header2\+Buff (\begin{DoxyParamCaption}\item[{uint8\+\_\+t $\ast$}]{buff }\end{DoxyParamCaption})}
+
+
+
+Add an header to a buffer. 
+
+The frame format follows the DYNAMIXEL PROTOCOL 2.\+0. The header is build on the following pattern \+: \tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Header   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Reserved    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Header   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Reserved    }\\\cline{1-2}
+\endhead
+0x\+FF 0x\+FF 0x\+FD   &0x00   \\\cline{1-2}
+\end{longtabu}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em buff} & The buffer in which the function will add the header. The buffer\textquotesingle{}s size must be more than 4 \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{xl320__driver_8h_a10e9257baf273a84235255eab58145d7}\label{xl320__driver_8h_a10e9257baf273a84235255eab58145d7}} 
+\index{xl320\_driver.h@{xl320\_driver.h}!xl320\_copyParams2Buff@{xl320\_copyParams2Buff}}
+\index{xl320\_copyParams2Buff@{xl320\_copyParams2Buff}!xl320\_driver.h@{xl320\_driver.h}}
+\doxysubsubsection{\texorpdfstring{xl320\_copyParams2Buff()}{xl320\_copyParams2Buff()}}
+{\footnotesize\ttfamily xl320\+\_\+copy\+Params2\+Buff (\begin{DoxyParamCaption}\item[{uint8\+\_\+t}]{buff\+Start\+Index,  }\item[{uint8\+\_\+t $\ast$}]{buff,  }\item[{uint16\+\_\+t}]{nb\+Params,  }\item[{uint8\+\_\+t $\ast$}]{params }\end{DoxyParamCaption})}
+
+
+
+Copy a table in an other table The number of element between the start index and the end of buff (the receiving table) must be greater than the size of params (the buffer to copy). 
+
+
+\begin{DoxyParams}{Parameters}
+{\em buff\+Start\+Index} & The address from which the params will be copied. \\
+\hline
+{\em buff} & The buffer in wich the params will be copied \\
+\hline
+{\em nb\+Params} & The size of the to-\/copy table. \\
+\hline
+{\em params} & The table to copy. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{xl320__driver_8h_abdfa1e52e7d085e3d80f2cd3301a154b}\label{xl320__driver_8h_abdfa1e52e7d085e3d80f2cd3301a154b}} 
+\index{xl320\_driver.h@{xl320\_driver.h}!xl320\_init@{xl320\_init}}
+\index{xl320\_init@{xl320\_init}!xl320\_driver.h@{xl320\_driver.h}}
+\doxysubsubsection{\texorpdfstring{xl320\_init()}{xl320\_init()}}
+{\footnotesize\ttfamily xl320\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} $\ast$}]{xl320,  }\item[{uint8\+\_\+t}]{id,  }\item[{XL320\+\_\+\+Baud\+Rate\+\_\+t}]{br }\end{DoxyParamCaption})}
+
+
+
+Initialize XL320 structure. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em xl320} & Instance to be initialized \\
+\hline
+{\em id} & Device\textquotesingle{}s ID \\
+\hline
+{\em br} & Devices\textquotesingle{}s baud-\/rate\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns zero if successful 
+\end{DoxyReturn}
+\mbox{\Hypertarget{xl320__driver_8h_a23760a6974fe7a9092fa8bc5757d81f9}\label{xl320__driver_8h_a23760a6974fe7a9092fa8bc5757d81f9}} 
+\index{xl320\_driver.h@{xl320\_driver.h}!xl320\_sendCommand@{xl320\_sendCommand}}
+\index{xl320\_sendCommand@{xl320\_sendCommand}!xl320\_driver.h@{xl320\_driver.h}}
+\doxysubsubsection{\texorpdfstring{xl320\_sendCommand()}{xl320\_sendCommand()}}
+{\footnotesize\ttfamily xl320\+\_\+send\+Command (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{struct_x_l320__t}{XL320\+\_\+t}} $\ast$}]{xl320,  }\item[{uint8\+\_\+t}]{inst,  }\item[{uint16\+\_\+t}]{nb\+Params,  }\item[{uint8\+\_\+t $\ast$}]{params }\end{DoxyParamCaption})}
+
+
+
+Send a command to the corresponding XL320. If this function is used according to the DYNAMIXEL PROTOCOLE 2.\+0 the address field is coded on 1 byte. The the parameters table should looks like the following example. The 0 stands for the most significant bits of the address which are not used. 
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{uint8\_t params[3] = \{ADDR, 0, ..., ...\}}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em xl320} & XL320 device \\
+\hline
+{\em inst} & Instruction \\
+\hline
+{\em nb\+Params} & The number of parameters. Can be 0 \\
+\hline
+{\em params} & The pointer on the table containing the parameters. Can be NULL \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{xl320__driver_8h_a5d8deba3b0b5b80260e2661891f9a07a}\label{xl320__driver_8h_a5d8deba3b0b5b80260e2661891f9a07a}} 
+\index{xl320\_driver.h@{xl320\_driver.h}!xl320\_updateCrc@{xl320\_updateCrc}}
+\index{xl320\_updateCrc@{xl320\_updateCrc}!xl320\_driver.h@{xl320\_driver.h}}
+\doxysubsubsection{\texorpdfstring{xl320\_updateCrc()}{xl320\_updateCrc()}}
+{\footnotesize\ttfamily unsigned short xl320\+\_\+update\+Crc (\begin{DoxyParamCaption}\item[{unsigned short}]{crc\+\_\+accum,  }\item[{unsigned char $\ast$}]{data\+\_\+blk\+\_\+ptr,  }\item[{unsigned short}]{data\+\_\+blk\+\_\+size }\end{DoxyParamCaption})}
+
+
+
+Compute the CRC field of a data frame. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em crc\+\_\+accum} & Must be set to zero. \\
+\hline
+{\em data\+\_\+blk\+\_\+ptr} & Pointer in the first element of the data frame. \\
+\hline
+{\em data\+\_\+blk\+\_\+size} & Size of the data frame.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The CRC value on 16 bits. 
+\end{DoxyReturn}

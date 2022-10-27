@@ -1,0 +1,279 @@
+\hypertarget{xl320__driver_8c_source}{}\doxysection{xl320\+\_\+driver.\+c}
+\label{xl320__driver_8c_source}\index{Core/Src/xl320\_driver.c@{Core/Src/xl320\_driver.c}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00001}00001 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00002}00002 \textcolor{comment}{ * @file xl320\_driver.c}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00003}00003 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00004}00004 \textcolor{comment}{ *}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00005}00005 \textcolor{comment}{ */}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00007}00007 \textcolor{preprocessor}{\#include "{}xl320\_driver.h"{}}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00009}00009 \textcolor{keywordtype}{int} xl320\_init(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320, uint8\_t \textcolor{keywordtype}{id}, XL320\_BaudRate\_t br)\{}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00010}00010     xl320-\/>\mbox{\hyperlink{struct_x_l320__t_a1e6927fa1486224044e568f9c370519b}{id}}     = id;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00011}00011     xl320-\/>\mbox{\hyperlink{struct_x_l320__t_a1142199724e11c4a24259c58185e7daa}{br}} = br;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00013}00013     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00014}00014 \}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00015}00015 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00016}00016 \textcolor{keywordtype}{void} xl320\_addHeader2Buff(uint8\_t* buff)\{}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00017}00017     buff[0] = 0xFF;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00018}00018     buff[1] = 0xFF;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00019}00019     buff[2] = 0xFD;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00020}00020     buff[3] = 0x00;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00021}00021 \}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00023}00023 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} xl320\_updateCrc(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} crc\_accum, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *data\_blk\_ptr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} data\_blk\_size) \{}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00024}00024     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} i, j;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00025}00025     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} crc\_table[256] = \{}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00026}00026             0x0000, 0x8005, 0x800F, 0x000A, 0x801B, 0x001E, 0x0014, 0x8011,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00027}00027             0x8033, 0x0036, 0x003C, 0x8039, 0x0028, 0x802D, 0x8027, 0x0022,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00028}00028             0x8063, 0x0066, 0x006C, 0x8069, 0x0078, 0x807D, 0x8077, 0x0072,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00029}00029             0x0050, 0x8055, 0x805F, 0x005A, 0x804B, 0x004E, 0x0044, 0x8041,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00030}00030             0x80C3, 0x00C6, 0x00CC, 0x80C9, 0x00D8, 0x80DD, 0x80D7, 0x00D2,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00031}00031             0x00F0, 0x80F5, 0x80FF, 0x00FA, 0x80EB, 0x00EE, 0x00E4, 0x80E1,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00032}00032             0x00A0, 0x80A5, 0x80AF, 0x00AA, 0x80BB, 0x00BE, 0x00B4, 0x80B1,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00033}00033             0x8093, 0x0096, 0x009C, 0x8099, 0x0088, 0x808D, 0x8087, 0x0082,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00034}00034             0x8183, 0x0186, 0x018C, 0x8189, 0x0198, 0x819D, 0x8197, 0x0192,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00035}00035             0x01B0, 0x81B5, 0x81BF, 0x01BA, 0x81AB, 0x01AE, 0x01A4, 0x81A1,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00036}00036             0x01E0, 0x81E5, 0x81EF, 0x01EA, 0x81FB, 0x01FE, 0x01F4, 0x81F1,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00037}00037             0x81D3, 0x01D6, 0x01DC, 0x81D9, 0x01C8, 0x81CD, 0x81C7, 0x01C2,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00038}00038             0x0140, 0x8145, 0x814F, 0x014A, 0x815B, 0x015E, 0x0154, 0x8151,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00039}00039             0x8173, 0x0176, 0x017C, 0x8179, 0x0168, 0x816D, 0x8167, 0x0162,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00040}00040             0x8123, 0x0126, 0x012C, 0x8129, 0x0138, 0x813D, 0x8137, 0x0132,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00041}00041             0x0110, 0x8115, 0x811F, 0x011A, 0x810B, 0x010E, 0x0104, 0x8101,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00042}00042             0x8303, 0x0306, 0x030C, 0x8309, 0x0318, 0x831D, 0x8317, 0x0312,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00043}00043             0x0330, 0x8335, 0x833F, 0x033A, 0x832B, 0x032E, 0x0324, 0x8321,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00044}00044             0x0360, 0x8365, 0x836F, 0x036A, 0x837B, 0x037E, 0x0374, 0x8371,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00045}00045             0x8353, 0x0356, 0x035C, 0x8359, 0x0348, 0x834D, 0x8347, 0x0342,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00046}00046             0x03C0, 0x83C5, 0x83CF, 0x03CA, 0x83DB, 0x03DE, 0x03D4, 0x83D1,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00047}00047             0x83F3, 0x03F6, 0x03FC, 0x83F9, 0x03E8, 0x83ED, 0x83E7, 0x03E2,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00048}00048             0x83A3, 0x03A6, 0x03AC, 0x83A9, 0x03B8, 0x83BD, 0x83B7, 0x03B2,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00049}00049             0x0390, 0x8395, 0x839F, 0x039A, 0x838B, 0x038E, 0x0384, 0x8381,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00050}00050             0x0280, 0x8285, 0x828F, 0x028A, 0x829B, 0x029E, 0x0294, 0x8291,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00051}00051             0x82B3, 0x02B6, 0x02BC, 0x82B9, 0x02A8, 0x82AD, 0x82A7, 0x02A2,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00052}00052             0x82E3, 0x02E6, 0x02EC, 0x82E9, 0x02F8, 0x82FD, 0x82F7, 0x02F2,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00053}00053             0x02D0, 0x82D5, 0x82DF, 0x02DA, 0x82CB, 0x02CE, 0x02C4, 0x82C1,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00054}00054             0x8243, 0x0246, 0x024C, 0x8249, 0x0258, 0x825D, 0x8257, 0x0252,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00055}00055             0x0270, 0x8275, 0x827F, 0x027A, 0x826B, 0x026E, 0x0264, 0x8261,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00056}00056             0x0220, 0x8225, 0x822F, 0x022A, 0x823B, 0x023E, 0x0234, 0x8231,}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00057}00057             0x8213, 0x0216, 0x021C, 0x8219, 0x0208, 0x820D, 0x8207, 0x0202}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00058}00058     \};}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00059}00059 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00060}00060     \textcolor{keywordflow}{for}(j = 0; j < data\_blk\_size; j++) \{}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00061}00061         i = ((\textcolor{keywordtype}{unsigned} short)(crc\_accum >> 8) \string^ data\_blk\_ptr[j]) \& 0xFF;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00062}00062         crc\_accum = (crc\_accum << 8) \string^ crc\_table[i];}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00063}00063     \}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00064}00064 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00065}00065     \textcolor{keywordflow}{return} crc\_accum;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00066}00066 \}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00068}00068 \textcolor{keywordtype}{void} xl320\_copyParams2Buff(uint8\_t buffStartIndex, uint8\_t* buff, uint16\_t nbParams, uint8\_t* params)\{}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00069}00069     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i = 0; i < nbParams; i++)\{}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00070}00070         buff[i + buffStartIndex] = params[i];}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00071}00071     \}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00072}00072 \}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00073}00073 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00074}00074 \textcolor{keywordtype}{int} xl320\_sendCommand(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320, XL320\_Instruction\_t inst, uint16\_t nbParams, uint8\_t* params)\{}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00075}00075     uint8\_t* txBuff = NULL;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00076}00076     txBuff = (uint8\_t*) malloc((MIN\_FRAME\_SIZE + nbParams)*\textcolor{keyword}{sizeof}(uint8\_t));}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00077}00077     uint16\_t length = nbParams + 3;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00078}00078 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00079}00079     xl320\_addHeader2Buff(txBuff);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00080}00080     txBuff[4] = xl320-\/>\mbox{\hyperlink{struct_x_l320__t_a1e6927fa1486224044e568f9c370519b}{id}};}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00081}00081     txBuff[5] = (uint8\_t) (length \& 0xFF);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00082}00082     txBuff[6] = (uint8\_t) (length >> 8);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00083}00083     txBuff[7] = inst;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00084}00084     xl320\_copyParams2Buff(8, txBuff, nbParams, params);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00085}00085 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00086}00086     uint16\_t crc = xl320\_updateCrc(0, txBuff, MIN\_FRAME\_SIZE + nbParams -\/ CRC\_FIELD\_SIZE);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00087}00087 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00088}00088     txBuff[(MIN\_FRAME\_SIZE + nbParams) -\/ 2] = (uint8\_t) (crc \& 0xFF);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00089}00089     txBuff[(MIN\_FRAME\_SIZE + nbParams) -\/ 1] = (uint8\_t) (crc >> 8);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00090}00090 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00091}00091     xl320-\/>\mbox{\hyperlink{struct_x_l320__t_a744ba4a093bef840400e120f0596a174}{serial}}.\mbox{\hyperlink{structxl320__serial__struct_ade347552f092e0750243174fd19dd1d1}{transmit}}(txBuff, (MIN\_FRAME\_SIZE + nbParams)*\textcolor{keyword}{sizeof}(uint8\_t), 0x1F4);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00092}00092     \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00093}00093 \textcolor{comment}{    HAL\_HalfDuplex\_EnableTransmitter(\&huart6);}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00094}00094 \textcolor{comment}{    HAL\_UART\_Transmit(xl320-\/>uart, txBuff, (MIN\_FRAME\_SIZE + nbParams)*sizeof(uint8\_t), 0x1F4);}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00095}00095 \textcolor{comment}{     */}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00096}00096 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00097}00097     free(txBuff);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00098}00098     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00099}00099 \}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00100}00100 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00101}00101 \textcolor{keywordtype}{int} xl320\_receiveCommand(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320, uint8\_t* rxBuff)\{}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00102}00102     xl320-\/>\mbox{\hyperlink{struct_x_l320__t_a744ba4a093bef840400e120f0596a174}{serial}}.\mbox{\hyperlink{structxl320__serial__struct_a57a258cba305b5e0f483a9b142120ff5}{receive}}(rxBuff, BUFFER\_SIZE, 0x1F4);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00103}00103 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00104}00104     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00105}00105 \}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00106}00106 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00107}00107 \textcolor{keywordtype}{int} xl320\_checkErrorField(uint8\_t errCode)\{}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00108}00108     \textcolor{keywordflow}{switch}(errCode)\{}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00109}00109     \textcolor{keywordflow}{case} NO\_ERROR :}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00110}00110         \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00111}00111     \textcolor{keywordflow}{case} RESULT\_FAIL :}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00112}00112         DEBUG\_PRINTF(\textcolor{stringliteral}{"{}XL320 ERROR : Failed to process the sent Instruction Packet\(\backslash\)r\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00113}00113         \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00114}00114     \textcolor{keywordflow}{case} INSTR\_ERROR :}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00115}00115         DEBUG\_PRINTF(\textcolor{stringliteral}{"{}XL320 ERROR : Undefined Instruction has been used or action has been used without Reg/Write\(\backslash\)r\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00116}00116         \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00117}00117     \textcolor{keywordflow}{case} CRC\_ERROR :}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00118}00118         DEBUG\_PRINTF(\textcolor{stringliteral}{"{}XL320 ERROR : CRC of the sent Packet does not match\(\backslash\)r\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00119}00119         \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00120}00120     \textcolor{keywordflow}{case} DATA\_RANGE\_ERROR :}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00121}00121         DEBUG\_PRINTF(\textcolor{stringliteral}{"{}XL320 ERROR : Data to be written in the corresponding Address is outside the range of the min/max value\(\backslash\)r\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00122}00122         \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00123}00123     \textcolor{keywordflow}{case} DATA\_LENGTH\_ERROR :}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00124}00124         DEBUG\_PRINTF(\textcolor{stringliteral}{"{}XL320 ERROR : Attempt to write Data that is shorter than the data length of the corresponding Address\(\backslash\)r\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00125}00125         \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00126}00126     \textcolor{keywordflow}{case} DATA\_LIMIT\_ERROR :}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00127}00127         DEBUG\_PRINTF(\textcolor{stringliteral}{"{}XL320 ERROR : Data to be written in the corresponding Address is outside of the Limit value\(\backslash\)r\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00128}00128         \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00129}00129     \textcolor{keywordflow}{case} ACCESS\_ERROR :}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00130}00130         DEBUG\_PRINTF(\textcolor{stringliteral}{"{}XL320 ERROR : Attempt to write a value in an Address that is Read Only or has not been defined\(\backslash\)r\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00131}00131         DEBUG\_PRINTF(\textcolor{stringliteral}{"{}              Attempt to read a value in an Address that is Write Only or has not been defined\(\backslash\)r\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00132}00132         DEBUG\_PRINTF(\textcolor{stringliteral}{"{}              Attempt to write a value in the ROM domain while in a state of Torque Enable(ROM Lock)\(\backslash\)r\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00133}00133         \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00134}00134     \}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00135}00135     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00136}00136 \}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00137}00137 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00138}00138 \textcolor{keywordtype}{int} xl320\_check\_crcField(uint8\_t* buffer)\{}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00139}00139     uint16\_t nbParam = buffer[LEN\_FRAME\_OFFSET] + (buffer[LEN\_FRAME\_OFFSET + 1]<<8) -\/ 3;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00140}00140 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00141}00141     uint16\_t crcReceived = buffer[MIN\_FRAME\_SIZE + nbParam -\/ 1] + (buffer[MIN\_FRAME\_SIZE + nbParam]<<8);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00142}00142     uint16\_t crcComputed = xl320\_updateCrc(0, buffer, MIN\_FRAME\_SIZE + nbParam -\/ 2);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00143}00143 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00144}00144     \textcolor{keywordflow}{if}(crcReceived == crcComputed)}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00145}00145         \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00146}00146     \textcolor{keywordflow}{else} \{}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00147}00147         DEBUG\_PRINTF(\textcolor{stringliteral}{"{}XL320 ERROR : CRC of the received Packet does not matched\(\backslash\)r\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00148}00148         \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00149}00149     \}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00150}00150 \}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00151}00151 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00152}00152 \textcolor{keywordtype}{int} xl320\_reboot(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320)\{}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00153}00153     \textcolor{keywordtype}{char} rxBuff[BUFFER\_SIZE] = \{0\};}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00154}00154 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00155}00155     xl320\_sendCommand(xl320, REBOOT, 0, NULL);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00156}00156     xl320\_receiveCommand(xl320, (uint8\_t*) \&rxBuff);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00157}00157 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00158}00158     \textcolor{keywordflow}{if}(xl320\_check\_crcField((uint8\_t*)\&rxBuff) == -\/1)}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00159}00159         \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00160}00160 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00161}00161     \textcolor{keywordflow}{if}(xl320\_checkErrorField(rxBuff[ERR\_FRAME\_OFFSET]) == -\/1)}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00162}00162         \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00163}00163 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00164}00164     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00165}00165 \}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00166}00166 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00167}00167 \textcolor{keywordtype}{int} xl320\_setLedColor(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320, XL320\_Color\_t color)\{}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00168}00168     uint8\_t params[3] = \{LED, 0, (uint8\_t) color\};}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00169}00169 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00170}00170     xl320\_sendCommand(xl320, WRITE, 3, (uint8\_t*) \&params);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00171}00171 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00172}00172     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00173}00173 \}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00174}00174 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00175}00175 \textcolor{keywordtype}{int} xl320\_setGoalPosition(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320, \textcolor{keywordtype}{float} goalPositionInDeg)\{}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00176}00176     uint16\_t position = (uint16\_t)(goalPositionInDeg/BIT\_RESOLUTION\_IN\_DEG);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00177}00177     uint8\_t params[4] = \{POSITION, 0, (uint8\_t)(position \& 0xFF) , (uint8\_t)(position >> 8)\};}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00178}00178 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00179}00179     xl320\_sendCommand(xl320, WRITE, 4, (uint8\_t*) \&params);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00180}00180 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00181}00181     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00182}00182 \}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00183}00183 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00184}00184 \textcolor{keywordtype}{int} xl320\_setSpeed(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320, \textcolor{keywordtype}{float} rpm)\{}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00185}00185     uint16\_t speedValue = (uint16\_t)(rpm/RESOLUTION\_SPEED);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00186}00186     uint8\_t highByte = (uint8\_t)((speedValue >> 8) \& 0xFF);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00187}00187     uint8\_t lowByte = (uint8\_t)(speedValue \& 0xFF);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00188}00188 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00189}00189     uint8\_t params[4] = \{LIMIT\_SPEED, 0, lowByte, highByte\};}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00190}00190     xl320\_sendCommand(xl320, WRITE, 3, (uint8\_t*) \&params);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00191}00191 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00192}00192     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00193}00193 \}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00194}00194 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00195}00195 \textcolor{keywordtype}{int} xl320\_executeAction(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320)\{}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00196}00196     xl320\_sendCommand(xl320, ACTION, 0, NULL);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00197}00197 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00198}00198     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00199}00199 \}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00200}00200 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00201}00201 \textcolor{keywordtype}{int} xl320\_torqueEnable(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320)\{}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00202}00202     uint8\_t params[3] = \{TORQUE\_EN, 0, ENABLE\};}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00203}00203 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00204}00204     xl320\_sendCommand(xl320, WRITE, 3, (uint8\_t*) \&params);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00205}00205 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00206}00206     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00207}00207 \}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00208}00208 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00209}00209 \textcolor{keywordtype}{int} xl320\_blinbling(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320)\{}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00210}00210     xl320\_setLedColor(xl320, Off);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00211}00211     HAL\_Delay(100);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00212}00212     xl320\_setLedColor(xl320, Red);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00213}00213     HAL\_Delay(100);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00214}00214     xl320\_setLedColor(xl320, Green);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00215}00215     HAL\_Delay(100);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00216}00216     xl320\_setLedColor(xl320, Yellow);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00217}00217     HAL\_Delay(100);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00218}00218     xl320\_setLedColor(xl320, Blue);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00219}00219     HAL\_Delay(100);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00220}00220     xl320\_setLedColor(xl320, Purple);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00221}00221     HAL\_Delay(100);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00222}00222     xl320\_setLedColor(xl320, Cyan);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00223}00223     HAL\_Delay(100);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00224}00224     xl320\_setLedColor(xl320, White);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00225}00225     HAL\_Delay(100);}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00226}00226 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00227}00227     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00228}00228 \}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00229}00229 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00230}00230 }
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00231}00231 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00232}00232 \textcolor{comment}{void xl320\_clearReceiveBuffer(uint8\_t* buffer) \{}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00233}00233 \textcolor{comment}{    int i;}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00234}00234 \textcolor{comment}{    for(i = 0; i < 32; i++)\{}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00235}00235 \textcolor{comment}{        buffer[i] = 0;}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00236}00236 \textcolor{comment}{    \}}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00237}00237 \textcolor{comment}{\}}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00238}00238 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00239}00239 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00240}00240 \textcolor{comment}{void xl320\_sendCommand(const uin8\_t servoId, uint8\_t* packet, uint16\_t packetLength) \{}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00241}00241 \textcolor{comment}{\}}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00242}00242 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00243}00243 \textcolor{comment}{void xl320\_addHeader()\{}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00244}00244 \textcolor{comment}{    uint8\_t headerPacket[] = \{0xFF, 0xFF, 0xFD\};}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00245}00245 \textcolor{comment}{\}}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00246}00246 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00247}00247 \textcolor{comment}{void xl320\_sendCommand(const uint8\_t servoId, uint8\_t* instructionPacket) \{}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00248}00248 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00249}00249 \textcolor{comment}{\}}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00250}00250 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00251}00251 \textcolor{comment}{void xl320\_ping(const uint8\_t servoId) \{}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00252}00252 \textcolor{comment}{    uint8\_t pingPacket[] = \{0xFF, 0xFF, 0xFD, 0x00, servoId, 0x03, 0x00, 0x01, 0x0, 0x0\};}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00253}00253 \textcolor{comment}{    unsigned short crc = xl320\_updateCrc(0, pingPacket, 8);}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00254}00254 \textcolor{comment}{    uint8\_t receiveBuffer[32];}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00255}00255 \textcolor{comment}{    xl320\_clearReceiveBuffer(receiveBuffer);}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00256}00256 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00257}00257 \textcolor{comment}{    pingPacket[8] = (uint8\_t) (crc \& 0xFF);}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00258}00258 \textcolor{comment}{    pingPacket[9] = (uint8\_t) (crc >> 8);}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00259}00259 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00260}00260 \textcolor{comment}{    HAL\_HalfDuplex\_EnableTransmitter(\&huart6);}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00261}00261 \textcolor{comment}{    HAL\_UART\_Transmit(\&huart6, pingPacket, 10*sizeof(char), 0x1F4);}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00262}00262 \textcolor{comment}{    printf("{}sent\(\backslash\)r\(\backslash\)n"{});}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00263}00263 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00264}00264 \textcolor{comment}{    HAL\_HalfDuplex\_EnableReceiver(\&huart6);}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00265}00265 \textcolor{comment}{    HAL\_UART\_Receive(\&huart6, receiveBuffer, 32, 0x1F4);}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00266}00266 \textcolor{comment}{    int i;}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00267}00267 \textcolor{comment}{    if(receiveBuffer[0] != 0) \{}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00268}00268 \textcolor{comment}{        for(i= 0; i < 32; i++)\{}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00269}00269 \textcolor{comment}{            printf("{}Received : \%d\(\backslash\)r\(\backslash\)n"{}, receiveBuffer[i]);}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00270}00270 \textcolor{comment}{        \}}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00271}00271 \textcolor{comment}{    \}}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00272}00272 \textcolor{comment}{\}}}
+\DoxyCodeLine{\Hypertarget{xl320__driver_8c_source_l00273}00273 \textcolor{comment}{ */}}
+
+\end{DoxyCode}

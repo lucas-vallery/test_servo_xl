@@ -1,175 +1,171 @@
 \hypertarget{xl320__driver_8h_source}{}\doxysection{xl320\+\_\+driver.\+h}
 \label{xl320__driver_8h_source}\index{Core/Inc/xl320\_driver.h@{Core/Inc/xl320\_driver.h}}
-
+\mbox{\hyperlink{xl320__driver_8h}{Go to the documentation of this file.}}
 \begin{DoxyCode}{0}
-\DoxyCodeLine{1 \textcolor{comment}{/*}}
-\DoxyCodeLine{2 \textcolor{comment}{ * xl320\_driver.h}}
-\DoxyCodeLine{3 \textcolor{comment}{ *}}
-\DoxyCodeLine{4 \textcolor{comment}{ *  Created on: Oct 14, 2022}}
-\DoxyCodeLine{5 \textcolor{comment}{ *      Author: lucas}}
-\DoxyCodeLine{6 \textcolor{comment}{ */}}
-\DoxyCodeLine{7 \textcolor{preprocessor}{\#pragma once}}
-\DoxyCodeLine{8 }
-\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <stdio.h>}}
-\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <stdlib.h>}}
-\DoxyCodeLine{11 }
-\DoxyCodeLine{12 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{main_8h}{main.h}}"{}}}
-\DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{usart_8h}{usart.h}}"{}}}
-\DoxyCodeLine{14 \textcolor{preprocessor}{\#include "{}uart\_half\_duplex\_driver.h"{}}}
-\DoxyCodeLine{15 }
-\DoxyCodeLine{16 \textcolor{comment}{/*}}
-\DoxyCodeLine{17 \textcolor{comment}{ * OPTION FOR DEBUG}}
-\DoxyCodeLine{18 \textcolor{comment}{ */}}
-\DoxyCodeLine{19 }
-\DoxyCodeLine{20 \textcolor{preprocessor}{\#define DEBUG\_XL320\_ENABLE}}
-\DoxyCodeLine{21 }
-\DoxyCodeLine{22 \textcolor{preprocessor}{\#ifdef DEBUG\_XL320\_ENABLE}}
-\DoxyCodeLine{23 \textcolor{preprocessor}{    \#define DEBUG\_PRINTF(x) printf(x)}}
-\DoxyCodeLine{24 \textcolor{preprocessor}{\#else}}
-\DoxyCodeLine{25 \textcolor{preprocessor}{    \#define DEBUG\_PRINTF}}
-\DoxyCodeLine{26 \textcolor{preprocessor}{\#endif}}
-\DoxyCodeLine{27 }
+\DoxyCodeLine{1 }
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{preprocessor}{\#include <stdio.h>}}
+\DoxyCodeLine{11 \textcolor{preprocessor}{\#include <stdlib.h>}}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{main_8h}{main.h}}"{}}}
+\DoxyCodeLine{14 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{usart_8h}{usart.h}}"{}}}
+\DoxyCodeLine{15 \textcolor{preprocessor}{\#include "{}uart\_half\_duplex\_driver.h"{}}}
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17 \textcolor{comment}{/*}}
+\DoxyCodeLine{18 \textcolor{comment}{ * OPTION FOR DEBUG}}
+\DoxyCodeLine{19 \textcolor{comment}{ */}}
+\DoxyCodeLine{20 }
+\DoxyCodeLine{21 \textcolor{preprocessor}{\#define DEBUG\_XL320\_ENABLE}}
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23 \textcolor{preprocessor}{\#ifdef DEBUG\_XL320\_ENABLE}}
+\DoxyCodeLine{24 \textcolor{preprocessor}{    \#define DEBUG\_PRINTF(x) printf(x)}}
+\DoxyCodeLine{25 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{26 \textcolor{preprocessor}{    \#define DEBUG\_PRINTF}}
+\DoxyCodeLine{27 \textcolor{preprocessor}{\#endif}}
 \DoxyCodeLine{28 }
-\DoxyCodeLine{29 \textcolor{comment}{/*}}
-\DoxyCodeLine{30 \textcolor{comment}{ * SERVO CONSTANTS}}
-\DoxyCodeLine{31 \textcolor{comment}{ */}}
-\DoxyCodeLine{32 \textcolor{preprocessor}{\#define BIT\_RESOLUTION\_IN\_DEG   0.29}}
-\DoxyCodeLine{33 \textcolor{preprocessor}{\#define RESOLUTION\_SPEED        0.111}}
-\DoxyCodeLine{34 \textcolor{preprocessor}{\#define LIMIT\_SPEED             114}}
-\DoxyCodeLine{35 }
-\DoxyCodeLine{36 \textcolor{preprocessor}{\#define GATE\_CLOSED             69}}
-\DoxyCodeLine{37 }
-\DoxyCodeLine{38 \textcolor{preprocessor}{\#define BUFFER\_SIZE             32}}
-\DoxyCodeLine{39 }
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 \textcolor{comment}{/*}}
+\DoxyCodeLine{31 \textcolor{comment}{ * SERVO CONSTANTS}}
+\DoxyCodeLine{32 \textcolor{comment}{ */}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#define BIT\_RESOLUTION\_IN\_DEG   0.29}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#define RESOLUTION\_SPEED        0.111}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#define LIMIT\_SPEED             114}}
+\DoxyCodeLine{36 }
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#define GATE\_CLOSED             69}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#define BUFFER\_SIZE             32}}
 \DoxyCodeLine{40 }
-\DoxyCodeLine{41 \textcolor{comment}{/*}}
-\DoxyCodeLine{42 \textcolor{comment}{ * FRAME SIZE}}
-\DoxyCodeLine{43 \textcolor{comment}{ */}}
-\DoxyCodeLine{44 \textcolor{preprocessor}{\#define MIN\_FRAME\_SIZE      10}}
-\DoxyCodeLine{45 \textcolor{preprocessor}{\#define CRC\_FIELD\_SIZE      2}}
-\DoxyCodeLine{46 \textcolor{preprocessor}{\#define ERR\_FRAME\_OFFSET    7}}
-\DoxyCodeLine{47 \textcolor{preprocessor}{\#define LEN\_FRAME\_OFFSET    5}}
-\DoxyCodeLine{48 }
+\DoxyCodeLine{41 }
+\DoxyCodeLine{42 \textcolor{comment}{/*}}
+\DoxyCodeLine{43 \textcolor{comment}{ * FRAME SIZE}}
+\DoxyCodeLine{44 \textcolor{comment}{ */}}
+\DoxyCodeLine{45 \textcolor{preprocessor}{\#define MIN\_FRAME\_SIZE      10}}
+\DoxyCodeLine{46 \textcolor{preprocessor}{\#define CRC\_FIELD\_SIZE      2}}
+\DoxyCodeLine{47 \textcolor{preprocessor}{\#define ERR\_FRAME\_OFFSET    7}}
+\DoxyCodeLine{48 \textcolor{preprocessor}{\#define LEN\_FRAME\_OFFSET    5}}
 \DoxyCodeLine{49 }
-\DoxyCodeLine{50 \textcolor{comment}{/*}}
-\DoxyCodeLine{51 \textcolor{comment}{ * BAUD RATES}}
-\DoxyCodeLine{52 \textcolor{comment}{ */}}
-\DoxyCodeLine{53 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} baudRate\_struct\{}
-\DoxyCodeLine{54     BR\_9600     =   0,}
-\DoxyCodeLine{55     BR\_57600    =   1,}
-\DoxyCodeLine{56     BR\_115200   =   2,}
-\DoxyCodeLine{57     BR\_1M       =   3}
-\DoxyCodeLine{58 \}XL320\_BaudRate\_t;}
-\DoxyCodeLine{59 }
+\DoxyCodeLine{50 }
+\DoxyCodeLine{51 \textcolor{comment}{/*}}
+\DoxyCodeLine{52 \textcolor{comment}{ * BAUD RATES}}
+\DoxyCodeLine{53 \textcolor{comment}{ */}}
+\DoxyCodeLine{54 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} baudRate\_struct\{}
+\DoxyCodeLine{55     BR\_9600     =   0,}
+\DoxyCodeLine{56     BR\_57600    =   1,}
+\DoxyCodeLine{57     BR\_115200   =   2,}
+\DoxyCodeLine{58     BR\_1M       =   3}
+\DoxyCodeLine{59 \}XL320\_BaudRate\_t;}
 \DoxyCodeLine{60 }
-\DoxyCodeLine{61 \textcolor{comment}{/*}}
-\DoxyCodeLine{62 \textcolor{comment}{ * INSTRUCTIONS}}
-\DoxyCodeLine{63 \textcolor{comment}{ */}}
-\DoxyCodeLine{64 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} instruction\_struct\{}
-\DoxyCodeLine{65     WRITE       =   0x03,}
-\DoxyCodeLine{66     REG\_WRITE   =   0x04,}
-\DoxyCodeLine{67     ACTION      =   0x05,}
-\DoxyCodeLine{68     REBOOT      =   0x08}
-\DoxyCodeLine{69 \}XL320\_Instruction\_t;}
-\DoxyCodeLine{70 }
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62 \textcolor{comment}{/*}}
+\DoxyCodeLine{63 \textcolor{comment}{ * INSTRUCTIONS}}
+\DoxyCodeLine{64 \textcolor{comment}{ */}}
+\DoxyCodeLine{65 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} instruction\_struct\{}
+\DoxyCodeLine{66     WRITE       =   0x03,}
+\DoxyCodeLine{67     REG\_WRITE   =   0x04,}
+\DoxyCodeLine{68     ACTION      =   0x05,}
+\DoxyCodeLine{69     REBOOT      =   0x08}
+\DoxyCodeLine{70 \}XL320\_Instruction\_t;}
 \DoxyCodeLine{71 }
-\DoxyCodeLine{72 \textcolor{comment}{/*}}
-\DoxyCodeLine{73 \textcolor{comment}{ * ERRORS}}
-\DoxyCodeLine{74 \textcolor{comment}{ */}}
-\DoxyCodeLine{75 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} error\_struct\{}
-\DoxyCodeLine{76     NO\_ERROR            =   0x00,}
-\DoxyCodeLine{77     RESULT\_FAIL         =   0x01,}
-\DoxyCodeLine{78     INSTR\_ERROR         =   0x02,}
-\DoxyCodeLine{79     CRC\_ERROR           =   0x03,}
-\DoxyCodeLine{80     DATA\_RANGE\_ERROR    =   0x04,}
-\DoxyCodeLine{81     DATA\_LENGTH\_ERROR   =   0x05,}
-\DoxyCodeLine{82     DATA\_LIMIT\_ERROR    =   0x06,}
-\DoxyCodeLine{83     ACCESS\_ERROR        =   0x07}
-\DoxyCodeLine{84 \}XL320\_Error\_t;}
-\DoxyCodeLine{85 }
-\DoxyCodeLine{86 \textcolor{comment}{/*}}
-\DoxyCodeLine{87 \textcolor{comment}{ * REGISTERS}}
-\DoxyCodeLine{88 \textcolor{comment}{ */}}
-\DoxyCodeLine{89 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} register\_struct\{}
-\DoxyCodeLine{90     TORQUE\_EN   =   0x18,}
-\DoxyCodeLine{91     LED         =   0x19,}
-\DoxyCodeLine{92     POSITION    =   0x1E}
-\DoxyCodeLine{93 \}XL320\_Register\_t;}
-\DoxyCodeLine{94 }
+\DoxyCodeLine{72 }
+\DoxyCodeLine{73 \textcolor{comment}{/*}}
+\DoxyCodeLine{74 \textcolor{comment}{ * ERRORS}}
+\DoxyCodeLine{75 \textcolor{comment}{ */}}
+\DoxyCodeLine{76 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} error\_struct\{}
+\DoxyCodeLine{77     NO\_ERROR            =   0x00,}
+\DoxyCodeLine{78     RESULT\_FAIL         =   0x01,}
+\DoxyCodeLine{79     INSTR\_ERROR         =   0x02,}
+\DoxyCodeLine{80     CRC\_ERROR           =   0x03,}
+\DoxyCodeLine{81     DATA\_RANGE\_ERROR    =   0x04,}
+\DoxyCodeLine{82     DATA\_LENGTH\_ERROR   =   0x05,}
+\DoxyCodeLine{83     DATA\_LIMIT\_ERROR    =   0x06,}
+\DoxyCodeLine{84     ACCESS\_ERROR        =   0x07}
+\DoxyCodeLine{85 \}XL320\_Error\_t;}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87 \textcolor{comment}{/*}}
+\DoxyCodeLine{88 \textcolor{comment}{ * REGISTERS}}
+\DoxyCodeLine{89 \textcolor{comment}{ */}}
+\DoxyCodeLine{90 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} register\_struct\{}
+\DoxyCodeLine{91     TORQUE\_EN   =   0x18,}
+\DoxyCodeLine{92     LED         =   0x19,}
+\DoxyCodeLine{93     POSITION    =   0x1E}
+\DoxyCodeLine{94 \}XL320\_Register\_t;}
 \DoxyCodeLine{95 }
-\DoxyCodeLine{96 \textcolor{comment}{/*}}
-\DoxyCodeLine{97 \textcolor{comment}{ * LED COLORS}}
-\DoxyCodeLine{98 \textcolor{comment}{ */}}
-\DoxyCodeLine{99 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} color\_struct\{}
-\DoxyCodeLine{100     Off,}
-\DoxyCodeLine{101     Red,}
-\DoxyCodeLine{102     Green,}
-\DoxyCodeLine{103     Yellow,}
-\DoxyCodeLine{104     Blue,}
-\DoxyCodeLine{105     Purple,}
-\DoxyCodeLine{106     Cyan,}
-\DoxyCodeLine{107     White}
-\DoxyCodeLine{108 \}XL320\_Color\_t;}
-\DoxyCodeLine{109 }
-\DoxyCodeLine{110 \textcolor{keyword}{typedef} int (* adxl345\_transmit\_t)(uint8\_t *pData, uint16\_t size, uint32\_t timeout);}
-\DoxyCodeLine{111 \textcolor{keyword}{typedef} int (* adxl345\_receive\_t)(uint8\_t *pData, uint16\_t size, uint32\_t timeout);}
-\DoxyCodeLine{112 }
-\DoxyCodeLine{113 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{structxl320__serial__struct}{xl320\_serial\_struct}}\{}
-\DoxyCodeLine{114     adxl345\_transmit\_t transmit;}
-\DoxyCodeLine{115     adxl345\_receive\_t receive;}
-\DoxyCodeLine{116 \}\mbox{\hyperlink{structxl320__serial__struct}{XL320\_Serial\_t}};}
-\DoxyCodeLine{117 }
-\DoxyCodeLine{123 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}\{}
-\DoxyCodeLine{124     uint8\_t \mbox{\hyperlink{struct_x_l320__t_af354e96bf42d103c707ccc65822af446}{id}}; }
-\DoxyCodeLine{125     uint8\_t \mbox{\hyperlink{struct_x_l320__t_a3d8de1e97561959e7cc64b55ec37c0c1}{br}}; }
-\DoxyCodeLine{127     \mbox{\hyperlink{structxl320__serial__struct}{XL320\_Serial\_t}} serial;}
-\DoxyCodeLine{128 }
-\DoxyCodeLine{129 \}\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}};}
-\DoxyCodeLine{130 }
-\DoxyCodeLine{131 }
-\DoxyCodeLine{132 \textcolor{keywordtype}{int} xl320\_init(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320,uint8\_t \textcolor{keywordtype}{id}, uint8\_t br);}
+\DoxyCodeLine{96 }
+\DoxyCodeLine{97 \textcolor{comment}{/*}}
+\DoxyCodeLine{98 \textcolor{comment}{ * LED COLORS}}
+\DoxyCodeLine{99 \textcolor{comment}{ */}}
+\DoxyCodeLine{100 \textcolor{keyword}{typedef} \textcolor{keyword}{enum} color\_struct\{}
+\DoxyCodeLine{101     Off,}
+\DoxyCodeLine{102     Red,}
+\DoxyCodeLine{103     Green,}
+\DoxyCodeLine{104     Yellow,}
+\DoxyCodeLine{105     Blue,}
+\DoxyCodeLine{106     Purple,}
+\DoxyCodeLine{107     Cyan,}
+\DoxyCodeLine{108     White}
+\DoxyCodeLine{109 \}XL320\_Color\_t;}
+\DoxyCodeLine{110 }
+\DoxyCodeLine{111 \textcolor{keyword}{typedef} int (* adxl345\_transmit\_t)(uint8\_t *pData, uint16\_t size, uint32\_t timeout);}
+\DoxyCodeLine{112 \textcolor{keyword}{typedef} int (* adxl345\_receive\_t)(uint8\_t *pData, uint16\_t size, uint32\_t timeout);}
+\DoxyCodeLine{113 }
+\DoxyCodeLine{114 }
+\DoxyCodeLine{121 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{structxl320__serial__struct}{xl320\_serial\_struct}}\{}
+\DoxyCodeLine{122     adxl345\_transmit\_t \mbox{\hyperlink{structxl320__serial__struct_a3a1f07dacae36baabc9f09e8c9fabd90}{transmit}}; }
+\DoxyCodeLine{123     adxl345\_receive\_t \mbox{\hyperlink{structxl320__serial__struct_aaf88c53cdc0170cb6210b8ddf4c22e81}{receive}};    }
+\DoxyCodeLine{124 \}\mbox{\hyperlink{xl320__driver_8h_ad38e59afe80a731a2600bb76b89aa928}{XL320\_Serial\_t}};}
+\DoxyCodeLine{125 }
+\DoxyCodeLine{130 \textcolor{keyword}{typedef} \textcolor{keyword}{struct }\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}\{}
+\DoxyCodeLine{131     uint8\_t \mbox{\hyperlink{struct_x_l320__t_af354e96bf42d103c707ccc65822af446}{id}};               }
+\DoxyCodeLine{132     uint8\_t \mbox{\hyperlink{struct_x_l320__t_a3d8de1e97561959e7cc64b55ec37c0c1}{br}};               }
 \DoxyCodeLine{133 }
-\DoxyCodeLine{134 \textcolor{keywordtype}{void} xl320\_addHeader2Buff(uint8\_t* buff);}
+\DoxyCodeLine{134     \mbox{\hyperlink{structxl320__serial__struct}{XL320\_Serial\_t}} \mbox{\hyperlink{struct_x_l320__t_a3bf829b367e6314be950d4d13e59a0d1}{serial}};      }
 \DoxyCodeLine{135 }
-\DoxyCodeLine{136 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} xl320\_updateCrc(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} crc\_accum, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *data\_blk\_ptr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} data\_blk\_size);}
+\DoxyCodeLine{136 \}\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}};}
 \DoxyCodeLine{137 }
-\DoxyCodeLine{138 \textcolor{keywordtype}{void} xl320\_copyParams2Buff(uint8\_t buffStartIndex, uint8\_t* buff, uint16\_t nbParams, uint8\_t* params);}
-\DoxyCodeLine{139 }
-\DoxyCodeLine{140 \textcolor{keywordtype}{int} xl320\_sendCommand(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320, uint8\_t inst, uint16\_t nbParams, uint8\_t* params);}
-\DoxyCodeLine{141 }
-\DoxyCodeLine{142 \textcolor{keywordtype}{int} xl320\_receiveCommand(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320, uint8\_t* rxBuff);}
-\DoxyCodeLine{143 }
-\DoxyCodeLine{144 \textcolor{keywordtype}{int} xl320\_checkErrorField(uint8\_t errCode);}
-\DoxyCodeLine{145 }
-\DoxyCodeLine{146 \textcolor{keywordtype}{int} xl320\_check\_crcField(uint8\_t* buffer);}
-\DoxyCodeLine{147 }
-\DoxyCodeLine{148 \textcolor{keywordtype}{int} xl320\_reboot(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320);}
-\DoxyCodeLine{149 }
-\DoxyCodeLine{150 \textcolor{keywordtype}{int} xl320\_setLedColor(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320, XL320\_Color\_t color);}
-\DoxyCodeLine{151 }
-\DoxyCodeLine{152 \textcolor{keywordtype}{int} xl320\_setGoalPosition(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320, \textcolor{keywordtype}{float} goalPositionInDeg);}
-\DoxyCodeLine{153 }
-\DoxyCodeLine{154 \textcolor{keywordtype}{int} xl320\_setSpeed(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320, \textcolor{keywordtype}{float} rpm);}
-\DoxyCodeLine{155 }
-\DoxyCodeLine{156 \textcolor{keywordtype}{int} xl320\_executeAction(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320);}
-\DoxyCodeLine{157 }
-\DoxyCodeLine{158 \textcolor{keywordtype}{int} xl320\_torqueEnable(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320);}
-\DoxyCodeLine{159 }
-\DoxyCodeLine{160 \textcolor{keywordtype}{int} xl320\_blinbling(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320);}
-\DoxyCodeLine{161 }
-\DoxyCodeLine{162 \textcolor{comment}{/*}}
-\DoxyCodeLine{163 \textcolor{comment}{void xl320\_clearReceiveBuffer(uint8\_t* buffer);}}
-\DoxyCodeLine{164 \textcolor{comment}{}}
-\DoxyCodeLine{165 \textcolor{comment}{void xl320\_addHeader(void);}}
-\DoxyCodeLine{166 \textcolor{comment}{}}
-\DoxyCodeLine{167 \textcolor{comment}{void xl320\_sendCommand(const uin8\_t servoId, uint8\_t* packet, uint16\_t packetLength);}}
-\DoxyCodeLine{168 \textcolor{comment}{}}
-\DoxyCodeLine{169 \textcolor{comment}{void xl320\_ping(const uint8\_t servoId);}}
-\DoxyCodeLine{170 \textcolor{comment}{}}
-\DoxyCodeLine{171 \textcolor{comment}{}}
-\DoxyCodeLine{172 \textcolor{comment}{}}
-\DoxyCodeLine{173 \textcolor{comment}{//void xl320\_led(const uint8\_t servoID);}}
-\DoxyCodeLine{174 \textcolor{comment}{}}
-\DoxyCodeLine{175 \textcolor{comment}{ */}}
+\DoxyCodeLine{149 \textcolor{keywordtype}{int} \mbox{\hyperlink{xl320__driver_8h_abdfa1e52e7d085e3d80f2cd3301a154b}{xl320\_init}}(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320,uint8\_t \textcolor{keywordtype}{id}, XL320\_BaudRate\_t br);}
+\DoxyCodeLine{150 }
+\DoxyCodeLine{164 \textcolor{keywordtype}{void} \mbox{\hyperlink{xl320__driver_8h_ad4b109c121e6a73abed51bf13897f558}{xl320\_addHeader2Buff}}(uint8\_t* buff);}
+\DoxyCodeLine{165 }
+\DoxyCodeLine{177 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} \mbox{\hyperlink{xl320__driver_8h_a5d8deba3b0b5b80260e2661891f9a07a}{xl320\_updateCrc}}(\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} crc\_accum, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{char} *data\_blk\_ptr, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{short} data\_blk\_size);}
+\DoxyCodeLine{178 }
+\DoxyCodeLine{191 \textcolor{keywordtype}{void} \mbox{\hyperlink{xl320__driver_8h_a10e9257baf273a84235255eab58145d7}{xl320\_copyParams2Buff}}(uint8\_t buffStartIndex, uint8\_t* buff, uint16\_t nbParams, uint8\_t* params);}
+\DoxyCodeLine{192 }
+\DoxyCodeLine{208 \textcolor{keywordtype}{int} \mbox{\hyperlink{xl320__driver_8h_a23760a6974fe7a9092fa8bc5757d81f9}{xl320\_sendCommand}}(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320, uint8\_t inst, uint16\_t nbParams, uint8\_t* params);}
+\DoxyCodeLine{209 }
+\DoxyCodeLine{210 \textcolor{keywordtype}{int} xl320\_receiveCommand(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320, uint8\_t* rxBuff);}
+\DoxyCodeLine{211 }
+\DoxyCodeLine{212 \textcolor{keywordtype}{int} xl320\_checkErrorField(uint8\_t errCode);}
+\DoxyCodeLine{213 }
+\DoxyCodeLine{214 \textcolor{keywordtype}{int} xl320\_check\_crcField(uint8\_t* buffer);}
+\DoxyCodeLine{215 }
+\DoxyCodeLine{216 \textcolor{keywordtype}{int} xl320\_reboot(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320);}
+\DoxyCodeLine{217 }
+\DoxyCodeLine{218 \textcolor{keywordtype}{int} xl320\_setLedColor(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320, XL320\_Color\_t color);}
+\DoxyCodeLine{219 }
+\DoxyCodeLine{220 \textcolor{keywordtype}{int} xl320\_setGoalPosition(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320, \textcolor{keywordtype}{float} goalPositionInDeg);}
+\DoxyCodeLine{221 }
+\DoxyCodeLine{222 \textcolor{keywordtype}{int} xl320\_setSpeed(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320, \textcolor{keywordtype}{float} rpm);}
+\DoxyCodeLine{223 }
+\DoxyCodeLine{224 \textcolor{keywordtype}{int} xl320\_executeAction(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320);}
+\DoxyCodeLine{225 }
+\DoxyCodeLine{226 \textcolor{keywordtype}{int} xl320\_torqueEnable(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320);}
+\DoxyCodeLine{227 }
+\DoxyCodeLine{228 \textcolor{keywordtype}{int} xl320\_blinbling(\mbox{\hyperlink{struct_x_l320__t}{XL320\_t}}* xl320);}
+\DoxyCodeLine{229 }
+\DoxyCodeLine{230 \textcolor{comment}{/*}}
+\DoxyCodeLine{231 \textcolor{comment}{void xl320\_clearReceiveBuffer(uint8\_t* buffer);}}
+\DoxyCodeLine{232 \textcolor{comment}{}}
+\DoxyCodeLine{233 \textcolor{comment}{void xl320\_addHeader(void);}}
+\DoxyCodeLine{234 \textcolor{comment}{}}
+\DoxyCodeLine{235 \textcolor{comment}{void xl320\_sendCommand(const uin8\_t servoId, uint8\_t* packet, uint16\_t packetLength);}}
+\DoxyCodeLine{236 \textcolor{comment}{}}
+\DoxyCodeLine{237 \textcolor{comment}{void xl320\_ping(const uint8\_t servoId);}}
+\DoxyCodeLine{238 \textcolor{comment}{}}
+\DoxyCodeLine{239 \textcolor{comment}{}}
+\DoxyCodeLine{240 \textcolor{comment}{}}
+\DoxyCodeLine{241 \textcolor{comment}{//void xl320\_led(const uint8\_t servoID);}}
+\DoxyCodeLine{242 \textcolor{comment}{}}
+\DoxyCodeLine{243 \textcolor{comment}{ */}}
 
 \end{DoxyCode}
