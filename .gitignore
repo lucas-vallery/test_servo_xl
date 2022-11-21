@@ -1,1 +1,5 @@
 /Debug/
+*.elf
+Debug/test_servo_xl.elf
+Debug/test_servo_xl.list
+Debug/test_servo_xl.map

@@ -60,8 +60,8 @@ all: main-build
 main-build: test_servo_xl.elf secondary-outputs
 
 # Tool invocations
-test_servo_xl.elf test_servo_xl.map: $(OBJS) $(USER_OBJS) /Users/jean-francoiscastellani/Documents/GitHub/test_servo_xl/STM32F746NGHX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "test_servo_xl.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"/Users/jean-francoiscastellani/Documents/GitHub/test_servo_xl/STM32F746NGHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="test_servo_xl.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+test_servo_xl.elf test_servo_xl.map: $(OBJS) $(USER_OBJS) C:\Users\lucas\STM32CubeIDE\workspace_1.9.0\test_servo_xl\STM32F746NGHX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "test_servo_xl.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"C:\Users\lucas\STM32CubeIDE\workspace_1.9.0\test_servo_xl\STM32F746NGHX_FLASH.ld" --specs=nosys.specs -Wl,-Map="test_servo_xl.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

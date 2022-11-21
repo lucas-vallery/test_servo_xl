@@ -67,8 +67,7 @@ typedef enum xl320_instruction_struct{
 	READ		=	0x02,
 	WRITE 		= 	0x03,
 	ACTION 		= 	0x05,
-	REBOOT 		= 	0x08,
-	SPEED		=	0x20
+	REBOOT 		= 	0x08
 }XL320_Instruction_t;
 
 
