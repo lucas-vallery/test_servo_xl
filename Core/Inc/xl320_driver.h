@@ -67,7 +67,8 @@ typedef enum xl320_instruction_struct{
 	READ		=	0x02,
 	WRITE 		= 	0x03,
 	ACTION 		= 	0x05,
-	REBOOT 		= 	0x08
+	REBOOT 		= 	0x08,
+	SPEED		=	0x20
 }XL320_Instruction_t;
 
 
@@ -232,6 +233,8 @@ int xl320_setSpeed(XL320_t* xl320, float rpm);
 int xl320_executeAction(XL320_t* xl320);
 
 int xl320_torqueEnable(XL320_t* xl320);
+
+int xl320_setSpeed(XL320_t* xl320, float rpm);
 
 int xl320_blinbling(XL320_t* xl320);
 
