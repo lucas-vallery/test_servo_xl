@@ -113,13 +113,17 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 	while (1)
 	{
+		/*
 		xl320_setGoalPosition(&xl320, 69);
 		xl320_executeAction(&xl320);
-		HAL_Delay(4000);
+		HAL_Delay(1000);
 		xl320_setGoalPosition(&xl320, 0);
 		xl320_executeAction(&xl320);
-		HAL_Delay(4000);
+		HAL_Delay(1000);
+		 */
 
+		xl320_ping(&xl320);
+		HAL_Delay(2000);
 
 		/* USER CODE END WHILE */
 

@@ -139,9 +139,12 @@ int xl320_checkErrorField(uint8_t errCode){
 }
 
 int xl320_check_crcField(uint8_t* buffer){
-	uint16_t nbParam = buffer[LEN_FRAME_OFFSET] + (buffer[LEN_FRAME_OFFSET + 1]<<8) - 3;
+	uint16_t nbParam = ((buffer[LEN_FRAME_OFFSET]) + (buffer[LEN_FRAME_OFFSET + 1]<<8));
 
-	uint16_t crcReceived = buffer[MIN_FRAME_SIZE + nbParam - 1] + (buffer[MIN_FRAME_SIZE + nbParam]<<8);
+	if(nbParam != 0)
+		nbParam -= 3;
+
+	uint16_t crcReceived = buffer[MIN_FRAME_SIZE + nbParam - 2] + (buffer[MIN_FRAME_SIZE + nbParam - 1]<<8);
 	uint16_t crcComputed = xl320_updateCrc(0, buffer, MIN_FRAME_SIZE + nbParam - 2);
 
 	if(crcReceived == crcComputed)
@@ -150,6 +153,20 @@ int xl320_check_crcField(uint8_t* buffer){
 		DEBUG_PRINTF("XL320 ERROR : CRC of the received Packet does not matched\r\n");
 		return -1;
 	}
+	return 0;
+}
+
+int xl320_ping(XL320_t* xl320){
+	char rxBuff[BUFFER_SIZE] = {0};
+
+	xl320_sendCommand(xl320, PING, 0, NULL);
+	xl320_receiveCommand(xl320, (uint8_t*) &rxBuff);
+
+	printf("SN LSB %d, SN MSB %d, FIRM, %d, CRC1 %d, CRC2 %d\r\n", rxBuff[9], rxBuff[10], rxBuff[11], rxBuff[12], rxBuff[13]);
+
+	if (0 == xl320_check_crcField((uint8_t*) &rxBuff))
+		printf("CRC OK\r\n");
+	return 0;
 }
 
 int xl320_reboot(XL320_t* xl320){
@@ -158,12 +175,13 @@ int xl320_reboot(XL320_t* xl320){
 	xl320_sendCommand(xl320, REBOOT, 0, NULL);
 	xl320_receiveCommand(xl320, (uint8_t*) &rxBuff);
 
+	/*
 	if(xl320_check_crcField((uint8_t*)&rxBuff) == -1)
 		return -1;
 
 	if(xl320_checkErrorField(rxBuff[ERR_FRAME_OFFSET]) == -1)
 		return -1;
-
+	 */
 	return 0;
 }
 

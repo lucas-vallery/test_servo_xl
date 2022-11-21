@@ -36,7 +36,7 @@
 
 #define GATE_CLOSED 			69
 
-#define BUFFER_SIZE				32
+#define BUFFER_SIZE				14
 
 
 /*
@@ -44,7 +44,7 @@
  */
 #define MIN_FRAME_SIZE 		10
 #define CRC_FIELD_SIZE		2
-#define ERR_FRAME_OFFSET	7
+#define ERR_FRAME_OFFSET	8 //7
 #define LEN_FRAME_OFFSET	5
 
 
@@ -62,9 +62,10 @@ typedef enum baudRate_struct{
 /*
  * INSTRUCTIONS
  */
-typedef enum instruction_struct{
+typedef enum xl320_instruction_struct{
+	PING 		=	0x01,
+	READ		=	0x02,
 	WRITE 		= 	0x03,
-	REG_WRITE 	= 	0x04,
 	ACTION 		= 	0x05,
 	REBOOT 		= 	0x08
 }XL320_Instruction_t;
@@ -73,7 +74,7 @@ typedef enum instruction_struct{
 /*
  * ERRORS
  */
-typedef enum error_struct{
+typedef enum xl320_error_struct{
 	NO_ERROR			=	0x00,
 	RESULT_FAIL			=	0x01,
 	INSTR_ERROR			=	0x02,
@@ -87,7 +88,7 @@ typedef enum error_struct{
 /*
  * REGISTERS
  */
-typedef enum register_struct{
+typedef enum xl320_register_struct{
 	TORQUE_EN 	= 	0x18,
 	LED 		= 	0x19,
 	POSITION 	= 	0x1E
@@ -97,7 +98,7 @@ typedef enum register_struct{
 /*
  * LED COLORS
  */
-typedef enum color_struct{
+typedef enum xl320_color_struct{
 	Off,
 	Red,
 	Green,
@@ -108,8 +109,8 @@ typedef enum color_struct{
 	White
 }XL320_Color_t;
 
-typedef int (* adxl345_transmit_t)(uint8_t *pData, uint16_t size, uint32_t timeout);
-typedef int (* adxl345_receive_t)(uint8_t *pData, uint16_t size, uint32_t timeout);
+typedef int (* xl320_transmit_t)(uint8_t *pData, uint16_t size, uint32_t timeout);
+typedef int (* xl320_receive_t)(uint8_t *pData, uint16_t size, uint32_t timeout);
 
 
 /**
@@ -118,21 +119,20 @@ typedef int (* adxl345_receive_t)(uint8_t *pData, uint16_t size, uint32_t timeou
  * It should be initialized with the corresponding functions according to your target.
  * The XL320 is a digital servo. It communicates in half-duplex (single-wire) UART.
  */
-typedef struct xl320_serial_struct{
-	adxl345_transmit_t transmit; //!< Should be initialized with the UART-transmit(half-duplex mode) function corresponding to your target
-	adxl345_receive_t receive;	 //!< Should be initialized with the UART-reiceive(half-duplex mode) function corresponding to your target
+typedef struct XL320_serial_struct{
+	xl320_transmit_t transmit; 		//!< Should be initialized with the UART-transmit(half-duplex mode) function corresponding to your target
+	xl320_receive_t receive;	 	//!< Should be initialized with the UART-reiceive(half-duplex mode) function corresponding to your target
 }XL320_Serial_t;
 
 /**
  * @brief XL320 object
  *
  */
-typedef struct XL320_t{
+typedef struct XL320_struct{
 	uint8_t id; 				//!< ID of the XL320. The default ID is 1
 	uint8_t br; 				//!< Baude rate of the XL320. The default baud rate is at 1MBaud/s
 
 	XL320_Serial_t serial;		//!< Serial abstraction object (Target dependent)
-
 }XL320_t;
 
 /**
@@ -218,6 +218,8 @@ int xl320_receiveCommand(XL320_t* xl320, uint8_t* rxBuff);
 int xl320_checkErrorField(uint8_t errCode);
 
 int xl320_check_crcField(uint8_t* buffer);
+
+int xl320_ping(XL320_t* xl320);
 
 int xl320_reboot(XL320_t* xl320);
 
