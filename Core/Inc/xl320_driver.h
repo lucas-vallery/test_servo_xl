@@ -92,7 +92,8 @@ typedef enum xl320_error_struct{
 typedef enum xl320_register_struct{
 	TORQUE_EN 	= 	0x18,
 	LED 		= 	0x19,
-	POSITION 	= 	0x1E
+	POSITION 	= 	0x1E,
+	SPEED 		= 	0x20
 }XL320_Register_t;
 
 
